@@ -16,6 +16,12 @@ Cloudflare Worker API adapter for [json-to-ffmpeg](https://github.com/pilotpirxi
 cd worker
 npm install
 npm run dev
+
+# In another terminal - test the API
+./examples/curl-test.sh
+
+# Or generate and execute FFmpeg command
+./examples/test-with-ffmpeg.sh simple
 ```
 
 ## API Endpoints
@@ -217,6 +223,8 @@ type PluginResult = {
 
 ## Examples
 
+### Test Fixtures
+
 See `test/fixtures/` for example timelines:
 - `simple-timeline.json` - 2 video clips with fade transition (from `short.spec.ts`)
 - `complex-timeline.json` - Full-featured timeline with 5 clips, watermark, audio tracks, and multiple transitions (from `complex.spec.ts`)
@@ -224,6 +232,52 @@ See `test/fixtures/` for example timelines:
 Both use real samples from the parent `samples/` directory (bee1920.mp4, book1920.mp4, cows1920.mp4, etc.)
 
 For details on samples and creating your own timelines, see [SAMPLES.md](./SAMPLES.md)
+
+### Example Scripts
+
+Located in `examples/`:
+
+#### 1. `curl-test.sh` - API Testing
+Tests all endpoints (health, version, build)
+```bash
+./examples/curl-test.sh
+```
+
+#### 2. `generate-ffmpeg.sh` - Generate Commands
+Generates FFmpeg command and optionally executes it
+```bash
+# Simple timeline
+./examples/generate-ffmpeg.sh simple
+
+# Complex timeline
+./examples/generate-ffmpeg.sh complex
+```
+
+Interactive prompt asks if you want to execute the command immediately.
+
+#### 3. `extract-command.sh` - Extract Command Only
+Extracts FFmpeg command from API response and saves to file
+```bash
+./examples/extract-command.sh path/to/timeline.json output.sh
+bash output.sh  # Execute manually
+```
+
+#### 4. `test-with-ffmpeg.sh` - Complete Workflow (Recommended)
+Full automated workflow with prerequisite checks
+```bash
+# Test simple timeline
+./examples/test-with-ffmpeg.sh simple
+
+# Test complex timeline
+./examples/test-with-ffmpeg.sh complex
+```
+
+This script:
+- ✓ Checks if worker is running
+- ✓ Checks if FFmpeg is installed
+- ✓ Verifies sample files exist
+- ✓ Generates FFmpeg command
+- ✓ Executes command and reports results
 
 ## License
 
