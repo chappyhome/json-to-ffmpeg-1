@@ -53,3 +53,7 @@ export function parseSchema(
 
   return outputCommand;
 }
+
+// Re-export buildTokens
+export { buildTokens } from "./buildTokens";
+export type { VideoEditorFormat } from "./types/VideoEditingFormat";
