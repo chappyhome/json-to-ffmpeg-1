@@ -255,10 +255,8 @@
           },
           "metadata": {
             "animation": {
-              "in": "fadeIn",      // 入场动画
-              "out": "fadeOut",    // 出场动画
-              "inDuration": 0.5,
-              "outDuration": 0.5
+              "type": "bounce",    // 入场/出场动画示例
+              "duration": 0.5
             }
           }
         }
@@ -454,8 +452,8 @@ const MetadataSchema = z.object({
 
 - **详细设计**: [NEW_JSON_DESIGN.md](NEW_JSON_DESIGN.md)
 - **方案对比**: [DESIGN_COMPARISON.md](DESIGN_COMPARISON.md)
-- **完整示例**: [worker/test/fixtures/complex-timeline-extended.json](worker/test/fixtures/complex-timeline-extended.json)
-- **当前格式**: [worker/test/fixtures/complex-timeline.json](worker/test/fixtures/complex-timeline.json)
+- **完整示例**: [worker/test/fixtures/complex-timeline-extended.json](../../worker/test/fixtures/complex-timeline-extended.json)
+- **当前格式**: [worker/test/fixtures/complex-timeline.json](../../worker/test/fixtures/complex-timeline.json)
 
 ---
 
@@ -470,3 +468,4 @@ const MetadataSchema = z.object({
 5. ✅ 渐进增强,用户友好
 
 **这是最适合当前项目架构的扩展方案!** 🎉
+

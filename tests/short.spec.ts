@@ -1,5 +1,5 @@
-import { parseSchema } from "./src";
-import { VideoEditorFormat } from "./src/types/VideoEditingFormat";
+import { parseSchema } from "../src";
+import { VideoEditorFormat } from "../src/types/VideoEditingFormat";
 
 (async () => {
   const schema: VideoEditorFormat = {

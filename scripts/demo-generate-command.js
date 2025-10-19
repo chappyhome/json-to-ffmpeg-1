@@ -8,7 +8,7 @@
  *   node demo-generate-command.js worker/test/fixtures/simple-timeline.json > output.sh
  */
 
-const { parseSchema } = require('./dist/src/index.js');
+const { parseSchema } = require('../dist/src/index.js');
 const fs = require('fs');
 const path = require('path');
 

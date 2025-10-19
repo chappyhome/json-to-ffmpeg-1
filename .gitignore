@@ -129,5 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Generated artifacts
+outputs/
 output.mp4
 tmp

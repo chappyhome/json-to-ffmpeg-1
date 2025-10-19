@@ -490,3 +490,4 @@ const SourceSchema = z.object({
 7. ✅ **易于验证和文档化** - Zod schema 和 TypeScript 类型自说明
 
 **这就是为什么 metadata 扩展方案最适合当前 Worker 插件架构的原因!** 🎉
+

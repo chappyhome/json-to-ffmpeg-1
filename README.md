@@ -487,3 +487,14 @@ All samples are from [Pixabay](https://pixabay.com/). All samples are licensed u
 
 ## License
 MIT
+ 
+## Repository Layout
+- Documentation: `docs/README.md`
+- Design docs: `docs/design`
+- Worker docs: `docs/worker`
+- Examples and guides: `docs/examples`
+- Tests: `tests`
+- Scripts: `scripts`
+- Generated outputs: `outputs` (ignored from version control)
+
+Note: The demo script moved to `scripts/demo-generate-command.js`.

@@ -15,10 +15,10 @@
 
 ```bash
 # 运行演示脚本
-node demo-generate-command.js worker/test/fixtures/simple-timeline.json
+node scripts/demo-generate-command.js worker/test/fixtures/simple-timeline.json
 
 # 输出到文件
-node demo-generate-command.js worker/test/fixtures/simple-timeline.json > output.sh
+node scripts/demo-generate-command.js worker/test/fixtures/simple-timeline.json > output.sh
 
 # 直接执行
 bash output.sh
@@ -110,7 +110,7 @@ bash output.sh
 
 ### 步骤 1: 准备 JSON 时间线
 
-[worker/test/fixtures/simple-timeline.json](worker/test/fixtures/simple-timeline.json):
+[worker/test/fixtures/simple-timeline.json](../../worker/test/fixtures/simple-timeline.json):
 
 ```json
 {
@@ -141,7 +141,7 @@ bash output.sh
 
 ```bash
 # 使用 Node.js
-node demo-generate-command.js worker/test/fixtures/simple-timeline.json > output.sh
+node scripts/demo-generate-command.js worker/test/fixtures/simple-timeline.json > output.sh
 
 # 或使用 Worker API
 curl -s -X POST http://localhost:8787/build \
@@ -209,7 +209,7 @@ bash output.sh
 
 ```bash
 # 直接使用 Node.js 库
-node demo-generate-command.js timeline.json | bash
+node scripts/demo-generate-command.js timeline.json | bash
 ```
 
 适合:
@@ -297,3 +297,4 @@ curl -X POST https://your-worker.workers.dev/build -d @timeline.json
   2. 通过 Cloudflare Worker API (更灵活)
 
 两种方式都已经实现并经过测试! 🎉
+
