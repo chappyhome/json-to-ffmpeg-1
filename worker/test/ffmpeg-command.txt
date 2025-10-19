@@ -1,0 +1,40 @@
+ffmpeg -y \
+-i https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/inputs/5b669b8a-1351-4368-a3f1-46b58a2f9eeb/original.mp4  \
+-i https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/inputs/08f9cf78-c900-43b9-9bfc-2ae4bba7e7fe/original.mp4  \
+-i https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/inputs/5b669b8a-1351-4368-a3f1-46b58a2f9eeb/original.mp4  \
+-i https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/inputs/ac9deb8e-99d2-49d9-892d-ba51d0367161/original.mp3 \
+-i https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/inputs/fb55c4c0-7d76-4fcf-ac6b-5299d843cc58/original.png \
+-filter_complex "color=c=black:s=1920x1080:d=20[base];
+color=black@0.0:s=1920x1080:d=8[jYXPfr9D_base];
+[0:v]trim=start=5:duration=8,setpts=PTS-STARTPTS,scale=1920:1080,format=rgba,colorchannelmixer=aa=1[CAFxF0Hi_clip];
+[jYXPfr9D_base][CAFxF0Hi_clip]overlay=0:0:format=auto,rotate=0,fps=30[bee_clip1];
+color=black@0.0:s=1920x1080:d=6[589JXddo_base];
+[1:v]trim=start=2:duration=6,setpts=PTS-STARTPTS,scale=1920:1080,format=rgba,colorchannelmixer=aa=1[qv30lC8Y_clip];
+[589JXddo_base][qv30lC8Y_clip]overlay=0:0:format=auto,rotate=0,fps=30[flowers_clip1];
+color=black@0.0:s=1920x1080:d=6[ABGkZHjV_base];
+[2:v]trim=start=15:duration=6,setpts=PTS-STARTPTS,scale=960:540,format=rgba,colorchannelmixer=aa=0.9[PdnHWRuM_clip];
+[ABGkZHjV_base][PdnHWRuM_clip]overlay=480:270:format=auto,rotate=0,fps=30[bee_clip2];
+color=c=black@0.0:s=1920x1080:d=1[void_bee_clip1];
+[void_bee_clip1]fps=30[fps_void_bee_clip1_HhKyebrW];
+[bee_clip1]fps=30[fps_bee_clip1_KHW5xRYF];
+[fps_void_bee_clip1_HhKyebrW][fps_bee_clip1_KHW5xRYF]xfade=transition=fade:duration=0.9333333333333333:offset=0,fps=30[start_xfade_LOjxaCAr];
+color=c=black@0.0:s=1920x1080:d=1.5[void_bee_clip2];
+[bee_clip2]fps=30[fps_bee_clip2_3iNRQEfy];
+[void_bee_clip2]fps=30[fps_void_bee_clip2_e1qx1ee1];
+[fps_bee_clip2_3iNRQEfy][fps_void_bee_clip2_e1qx1ee1]xfade=transition=fade:duration=1.4333333333333333:offset=4.5,fps=30[end_xfade_6K4PiPvQ];
+[start_xfade_LOjxaCAr]fps=30[fps_start_xfade_LOjxaCAr_415NwFuf];
+[flowers_clip1]fps=30[fps_flowers_clip1_Na7eV7Lp];
+[fps_start_xfade_LOjxaCAr_415NwFuf][fps_flowers_clip1_Na7eV7Lp]xfade=transition=fade:duration=1.5:offset=6.5,fps=30[between_xfade_S6ggBaX4];
+[between_xfade_S6ggBaX4]fps=30[fps_between_xfade_S6ggBaX4_OaqFwqnk];
+[end_xfade_6K4PiPvQ]fps=30[fps_end_xfade_6K4PiPvQ_zHIVvUlE];
+[fps_between_xfade_S6ggBaX4_OaqFwqnk][fps_end_xfade_6K4PiPvQ_zHIVvUlE]xfade=transition=circlecrop:duration=1:offset=11.5,fps=30[main_video_track];
+color=black@0.0:s=1920x1080:d=20[k7paea3o_base];
+[4:v]loop=loop=600:size=600,setpts=PTS-STARTPTS,fps=30,scale=320:320,format=rgba,colorchannelmixer=aa=0.8[jW3k2U9G_clip];
+[k7paea3o_base][jW3k2U9G_clip]overlay=1570:30:format=auto,rotate=0,fps=30[watermark_clip];
+[watermark_clip]setpts=PTS-STARTPTS[watermark_track];
+[3:a]atrim=10:30,asetpts=PTS-STARTPTS,volume=0.6[bg_music];
+[bg_music]concat=n=1:v=0:a=1[audio_track];
+[base][main_video_track]overlay=0:0[4ttmIhih_combined_track];
+[4ttmIhih_combined_track][watermark_track]overlay=0:0[video_output];
+[audio_track]volume=1[audio_output];" \
+-map '[video_output]' -map '[audio_output]' -c:v libx264 -c:a aac -b:a 320k -r 30 -s 1920x1080 -ss 0 -t 20 -crf 23 -preset medium -pix_fmt yuv420p final_output.mp4

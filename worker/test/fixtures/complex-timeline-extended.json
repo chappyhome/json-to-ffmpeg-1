@@ -1,0 +1,653 @@
+{
+  "version": 1,
+  "inputs": {
+    "_comment_1": "===== 原有格式 (向后兼容) =====",
+
+    "source1": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "source2": {
+      "type": "video",
+      "file": "samples/book1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 13
+    },
+    "source3": {
+      "type": "video",
+      "file": "samples/cows1920.mp4",
+      "hasAudio": true,
+      "hasVideo": true,
+      "duration": 15
+    },
+
+    "_comment_2": "===== 新格式: 背景音乐 (BGM) =====",
+
+    "bgm_main": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 2,
+        "fadeOut": 3,
+        "description": "主背景音乐,轻柔持续"
+      }
+    },
+
+    "_comment_3": "===== 新格式: 音效 (SFX) =====",
+
+    "sfx_click": {
+      "type": "audio",
+      "file": "samples/click.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 0.5,
+      "metadata": {
+        "audioType": "sfx",
+        "category": "ui",
+        "description": "按钮点击音效"
+      }
+    },
+    "sfx_whoosh": {
+      "type": "audio",
+      "file": "samples/whoosh.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 1.2,
+      "metadata": {
+        "audioType": "sfx",
+        "category": "transition",
+        "description": "过渡音效"
+      }
+    },
+    "sfx_bell": {
+      "type": "audio",
+      "file": "samples/bell.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 2.0,
+      "metadata": {
+        "audioType": "sfx",
+        "category": "notification",
+        "description": "提示音"
+      }
+    },
+
+    "_comment_4": "===== 新格式: 旁白 (Narration) =====",
+
+    "narration_intro": {
+      "type": "audio",
+      "file": "samples/voice_intro.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 5.5,
+      "metadata": {
+        "audioType": "narration",
+        "subtitle": "欢迎来到精彩的视频世界",
+        "language": "zh-CN",
+        "speaker": "narrator_main",
+        "description": "开场旁白"
+      }
+    },
+    "narration_scene1": {
+      "type": "audio",
+      "file": "samples/voice_scene1.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 8.0,
+      "metadata": {
+        "audioType": "narration",
+        "subtitle": "这是第一个场景的解说词",
+        "language": "zh-CN",
+        "speaker": "narrator_main",
+        "description": "场景1解说"
+      }
+    },
+
+    "_comment_5": "===== 新格式: 动画贴图 (GIF) =====",
+
+    "sticker_emoji_smile": {
+      "type": "image",
+      "file": "samples/emoji_smile.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "frameRate": 24,
+        "description": "笑脸动画表情"
+      }
+    },
+    "sticker_arrow_right": {
+      "type": "image",
+      "file": "samples/arrow_right.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "description": "向右箭头动画"
+      }
+    },
+    "sticker_sparkle": {
+      "type": "image",
+      "file": "samples/sparkle.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": false,
+        "description": "闪光特效(单次播放)"
+      }
+    },
+
+    "_comment_6": "===== 新格式: 静态水印 (原有格式兼容) =====",
+
+    "watermark_logo": {
+      "type": "image",
+      "file": "samples/flower.png",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "static",
+        "format": "png",
+        "description": "Logo 水印"
+      }
+    },
+
+    "_comment_7": "===== 新格式: 文本源 =====",
+
+    "text_main_title": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "精彩视频标题",
+        "fontFamily": "Arial",
+        "fontSize": 72,
+        "fontColor": "#FFFFFF",
+        "backgroundColor": "#00000000",
+        "textAlign": "center",
+        "fontWeight": "bold",
+        "stroke": {
+          "color": "#000000",
+          "width": 3
+        },
+        "shadow": {
+          "color": "#00000080",
+          "blur": 6,
+          "offsetX": 3,
+          "offsetY": 3
+        }
+      }
+    },
+    "text_subtitle_1": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "第一幕字幕内容",
+        "fontFamily": "Microsoft YaHei",
+        "fontSize": 36,
+        "fontColor": "#FFFFFF",
+        "backgroundColor": "#000000CC",
+        "textAlign": "center",
+        "boxPadding": 15
+      }
+    },
+    "text_subtitle_2": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "第二幕字幕内容",
+        "fontFamily": "Microsoft YaHei",
+        "fontSize": 36,
+        "fontColor": "#FFFF00",
+        "backgroundColor": "#000000CC",
+        "textAlign": "center",
+        "boxPadding": 15
+      }
+    },
+    "text_label": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "提示标签",
+        "fontFamily": "Arial",
+        "fontSize": 28,
+        "fontColor": "#FF0000",
+        "backgroundColor": "#FFFFFF80",
+        "textAlign": "left",
+        "boxPadding": 10
+      }
+    }
+  },
+
+  "tracks": {
+    "_comment_tracks_1": "===== 原有视频轨道 (向后兼容) =====",
+
+    "main_video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "clip1",
+          "source": "source1",
+          "timelineTrackStart": 0,
+          "duration": 5,
+          "sourceStartOffset": 10,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "clip2",
+          "source": "source2",
+          "timelineTrackStart": 5,
+          "duration": 4,
+          "sourceStartOffset": 5,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "clip3",
+          "source": "source3",
+          "timelineTrackStart": 9,
+          "duration": 6,
+          "sourceStartOffset": 3,
+          "clipType": "video",
+          "transform": {
+            "x": 480,
+            "y": 270,
+            "width": 960,
+            "height": 540,
+            "rotation": 0,
+            "opacity": 0.8
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_2": "===== 水印轨道 =====",
+
+    "watermark_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "logo_watermark",
+          "source": "watermark_logo",
+          "timelineTrackStart": 0,
+          "duration": 15,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 1610,
+            "y": 10,
+            "width": 300,
+            "height": 150,
+            "rotation": 0,
+            "opacity": 0.7
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_3": "===== 新轨道: 背景音乐 =====",
+
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_clip",
+          "source": "bgm_main",
+          "timelineTrackStart": 0,
+          "duration": 15,
+          "sourceStartOffset": 10,
+          "clipType": "audio",
+          "volume": 0.5,
+          "metadata": {
+            "role": "bgm",
+            "description": "主背景音乐,降低音量避免盖过旁白"
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_4": "===== 新轨道: 音效 =====",
+
+    "sfx_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "click_at_2s",
+          "source": "sfx_click",
+          "timelineTrackStart": 2.0,
+          "duration": 0.5,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.8,
+          "metadata": {
+            "role": "sfx",
+            "trigger": "button_appear",
+            "description": "按钮出现时的点击音"
+          }
+        },
+        {
+          "name": "whoosh_at_5s",
+          "source": "sfx_whoosh",
+          "timelineTrackStart": 5.0,
+          "duration": 1.2,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.7,
+          "metadata": {
+            "role": "sfx",
+            "trigger": "scene_transition",
+            "description": "场景切换音效"
+          }
+        },
+        {
+          "name": "bell_at_9s",
+          "source": "sfx_bell",
+          "timelineTrackStart": 9.0,
+          "duration": 2.0,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.9,
+          "metadata": {
+            "role": "sfx",
+            "trigger": "highlight",
+            "description": "重点提示音"
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_5": "===== 新轨道: 旁白 =====",
+
+    "narration_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "intro_narration",
+          "source": "narration_intro",
+          "timelineTrackStart": 0.5,
+          "duration": 5.5,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0,
+          "metadata": {
+            "role": "narration",
+            "subtitlePosition": "bottom",
+            "subtitleStyle": "default",
+            "description": "开场旁白"
+          }
+        },
+        {
+          "name": "scene1_narration",
+          "source": "narration_scene1",
+          "timelineTrackStart": 6.5,
+          "duration": 8.0,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0,
+          "metadata": {
+            "role": "narration",
+            "subtitlePosition": "bottom",
+            "subtitleStyle": "default",
+            "description": "场景1解说"
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_6": "===== 新轨道: 动画贴图 =====",
+
+    "sticker_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "emoji_smile_clip",
+          "source": "sticker_emoji_smile",
+          "timelineTrackStart": 1.0,
+          "duration": 2.0,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 100,
+            "y": 100,
+            "width": 200,
+            "height": 200,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "metadata": {
+            "animation": {
+              "type": "bounce",
+              "duration": 0.5,
+              "easing": "ease-in-out"
+            },
+            "description": "笑脸动画,带弹跳效果"
+          }
+        },
+        {
+          "name": "arrow_right_clip",
+          "source": "sticker_arrow_right",
+          "timelineTrackStart": 5.5,
+          "duration": 1.5,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 800,
+            "y": 500,
+            "width": 150,
+            "height": 150,
+            "rotation": 0,
+            "opacity": 0.9
+          },
+          "metadata": {
+            "description": "指向右侧的箭头"
+          }
+        },
+        {
+          "name": "sparkle_clip",
+          "source": "sticker_sparkle",
+          "timelineTrackStart": 9.0,
+          "duration": 1.0,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 960,
+            "y": 540,
+            "width": 300,
+            "height": 300,
+            "rotation": 0,
+            "opacity": 0.8
+          },
+          "metadata": {
+            "description": "闪光特效,单次播放"
+          }
+        }
+      ]
+    },
+
+    "_comment_tracks_7": "===== 新轨道: 文本 =====",
+
+    "title_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "main_title",
+          "source": "text_main_title",
+          "timelineTrackStart": 0.5,
+          "duration": 3.0,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 960,
+            "y": 200,
+            "width": 1200,
+            "height": 120,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "metadata": {
+            "animation": {
+              "in": "fadeIn",
+              "out": "fadeOut",
+              "inDuration": 0.5,
+              "outDuration": 0.5
+            },
+            "description": "主标题,带淡入淡出"
+          }
+        }
+      ]
+    },
+
+    "subtitle_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "subtitle_1",
+          "source": "text_subtitle_1",
+          "timelineTrackStart": 0.5,
+          "duration": 5.5,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 960,
+            "y": 950,
+            "width": 1600,
+            "height": 80,
+            "rotation": 0,
+            "opacity": 0.95
+          },
+          "metadata": {
+            "syncWithAudio": "intro_narration",
+            "description": "与开场旁白同步的字幕"
+          }
+        },
+        {
+          "name": "subtitle_2",
+          "source": "text_subtitle_2",
+          "timelineTrackStart": 6.5,
+          "duration": 8.0,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 960,
+            "y": 950,
+            "width": 1600,
+            "height": 80,
+            "rotation": 0,
+            "opacity": 0.95
+          },
+          "metadata": {
+            "syncWithAudio": "scene1_narration",
+            "description": "与场景1旁白同步的字幕"
+          }
+        }
+      ]
+    },
+
+    "label_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "tip_label",
+          "source": "text_label",
+          "timelineTrackStart": 9.0,
+          "duration": 2.0,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 100,
+            "y": 800,
+            "width": 300,
+            "height": 60,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "metadata": {
+            "animation": {
+              "in": "slideInLeft",
+              "out": "slideOutLeft",
+              "inDuration": 0.3,
+              "outDuration": 0.3
+            },
+            "description": "提示标签,从左滑入滑出"
+          }
+        }
+      ]
+    }
+  },
+
+  "transitions": [
+    {
+      "type": "fade",
+      "duration": 0.5,
+      "from": "clip1",
+      "to": "clip2"
+    },
+    {
+      "type": "smoothdown",
+      "duration": 0.5,
+      "from": "clip2",
+      "to": "clip3"
+    }
+  ],
+
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output_extended.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": ["-pix_fmt", "yuv420p"],
+    "startPosition": 0,
+    "endPosition": 15,
+    "scaleRatio": 1
+  }
+}
