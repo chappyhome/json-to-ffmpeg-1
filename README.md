@@ -6,11 +6,12 @@ Because of JSON it's much easier to create and edit video timeline and it's much
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ### Features
-* Supports video, audio and image sources
+* Supports video, audio, image and **text** sources
+* **Text rendering**: Dynamic text with customizable fonts, colors, shadows, and strokes
 * Clip transformation: scale, position, rotation, opacity
 * Clip transitions from/to and cross-fade: fade, smoothup, smoothdown, circlecrop, squeezev, squeezeh and more
 * For non-linear video editing with multiple tracks and clips
-* Minimalistic JSON format
+* Minimalistic JSON format with optional metadata extensions
 * No direct ffmpeg or node dependency required
 
 ## Usage
@@ -471,6 +472,74 @@ anullsrc=channel_layout=stereo:sample_rate=44100:d=3[gap_4fwsUHt5];
 [track2]volume=1[audio_output];" \
 -map '[video_output]' -map '[audio_output]' -c:v libx264 -c:a aac -b:a 320k -r 30 -s 384x216 -ss 0 -t 38 -crf 23 -preset veryfast -pix_fmt yuv420p output.mp4
 ```
+
+## Text Rendering (New! ✨)
+
+This library now supports dynamic text rendering directly in your videos! Add titles, subtitles, captions, and more without pre-rendering text images.
+
+### Quick Example
+
+```json
+{
+  "inputs": {
+    "text_title": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "Hello World!",
+        "fontSize": 72,
+        "fontColor": "#FFFFFF",
+        "backgroundColor": "#00000080",
+        "stroke": {
+          "color": "#000000",
+          "width": 2
+        },
+        "shadow": {
+          "color": "#00000080",
+          "blur": 4,
+          "offsetX": 2,
+          "offsetY": 2
+        }
+      }
+    }
+  },
+  "tracks": {
+    "text_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "title_text",
+          "source": "text_title",
+          "timelineTrackStart": 0.5,
+          "duration": 3.0,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 660,
+            "y": 200,
+            "width": 600,
+            "height": 100,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**Features:**
+- Custom fonts, sizes, and colors
+- Text shadows and strokes
+- Background boxes with transparency
+- Position and rotation control
+- Full opacity support
+
+📖 **[Read the full Text Rendering documentation](docs/TEXT_RENDERING.md)**
 
 ## Video, audio and image test samples
 All samples are from [Pixabay](https://pixabay.com/). All samples are licensed under [Pixabay License](https://pixabay.com/service/license/).

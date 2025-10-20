@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "inputs": {
+    "source1": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "text_title": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "Hello World!",
+        "fontFamily": "Arial",
+        "fontSize": 72,
+        "fontColor": "#FFFFFF",
+        "backgroundColor": "#00000080",
+        "textAlign": "center",
+        "fontWeight": "bold",
+        "stroke": {
+          "color": "#000000",
+          "width": 2
+        },
+        "shadow": {
+          "color": "#00000080",
+          "blur": 4,
+          "offsetX": 2,
+          "offsetY": 2
+        }
+      }
+    },
+    "text_subtitle": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "Welcome to FFmpeg Text Rendering",
+        "fontFamily": "Arial",
+        "fontSize": 48,
+        "fontColor": "#FFFF00",
+        "textAlign": "center",
+        "fontWeight": "normal"
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "background_clip",
+          "source": "source1",
+          "timelineTrackStart": 0,
+          "duration": 8,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "text_track_1": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "title_text",
+          "source": "text_title",
+          "timelineTrackStart": 0.5,
+          "duration": 3.0,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 660,
+            "y": 200,
+            "width": 600,
+            "height": 100,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "text_track_2": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "subtitle_text",
+          "source": "text_subtitle",
+          "timelineTrackStart": 4.0,
+          "duration": 3.5,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 360,
+            "y": 900,
+            "width": 1200,
+            "height": 80,
+            "rotation": 0,
+            "opacity": 0.9
+          }
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": ["-pix_fmt", "yuv420p"],
+    "startPosition": 0,
+    "endPosition": 8,
+    "scaleRatio": 0.2
+  }
+}

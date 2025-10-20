@@ -38,6 +38,7 @@ export function parseTracks({
       totalLength,
       transitions: schema.transitions,
       inputFiles,
+      inputs: schema.inputs,
     });
   }
 

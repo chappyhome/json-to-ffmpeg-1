@@ -8,6 +8,7 @@ export type ImageClip = {
   sourceStartOffset: number;
   clipType: "image";
   transform: Transform;
+  metadata?: any;
 };
 
 export type VideoClip = {
@@ -18,6 +19,7 @@ export type VideoClip = {
   sourceStartOffset: number;
   clipType: "video";
   transform: Transform;
+  metadata?: any;
 };
 
 export type AudioClip = {
@@ -28,6 +30,18 @@ export type AudioClip = {
   sourceStartOffset: number;
   clipType: "audio";
   volume: number;
+  metadata?: any;
 };
 
-export type Clip = VideoClip | AudioClip | ImageClip;
+export type TextClip = {
+  name: string;
+  source: string;
+  timelineTrackStart: number;
+  duration: number;
+  sourceStartOffset: number;
+  clipType: "text";
+  transform: Transform;
+  metadata?: any;
+};
+
+export type Clip = VideoClip | AudioClip | ImageClip | TextClip;

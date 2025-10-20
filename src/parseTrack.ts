@@ -4,6 +4,7 @@ import { Output } from "./types/Output";
 import { getRandomUID } from "./utils/uid";
 import { Transition } from "./types/Transition";
 import { InputFiles } from "./types/InputFiles";
+import { Inputs } from "./types/Inputs";
 
 /**
  * Real length of the transition is shorter
@@ -31,6 +32,7 @@ type ClipToConcat = {
  * @param totalLength
  * @param transitions
  * @param inputFiles
+ * @param inputs
  */
 export function parseTrack({
   trackName,
@@ -39,6 +41,7 @@ export function parseTrack({
   totalLength,
   transitions,
   inputFiles,
+  inputs,
 }: {
   trackName: string;
   track: Track;
@@ -46,6 +49,7 @@ export function parseTrack({
   totalLength: number;
   transitions: Transition[];
   inputFiles: InputFiles;
+  inputs: Inputs;
 }): string {
   let clipsCommand = "";
 
@@ -73,7 +77,7 @@ export function parseTrack({
       });
     }
 
-    clipsCommand += parseClip({ clip, output, inputFiles });
+    clipsCommand += parseClip({ clip, output, inputFiles, inputs });
     clipsToConcat.push({
       label: clip.name,
       duration: clip.duration,
