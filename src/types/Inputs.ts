@@ -37,7 +37,8 @@ export type ImageMetadata = {
 
 export type TextMetadata = {
   text: string;
-  fontFamily?: string;
+  fontFamily?: string;      // Font name (e.g., "Arial", "Helvetica")
+  fontFile?: string;         // Full path to font file (e.g., "/path/to/font.ttf")
   fontSize?: number;
   fontColor?: string;
   backgroundColor?: string;

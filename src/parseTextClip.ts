@@ -101,10 +101,18 @@ export function parseTextClip({
   // Build drawtext filter parameters
   const drawtextParams: string[] = [
     `text='${text}'`,
-    `fontfile=/System/Library/Fonts/Supplemental/${fontFamily}.ttf`,
     `fontsize=${fontSize}`,
     `fontcolor=${fontColor}`,
   ];
+
+  // Font configuration: prefer fontFile (explicit path) over fontFamily (system font)
+  if (metadata.fontFile) {
+    // Use explicit font file path
+    drawtextParams.splice(1, 0, `fontfile=${metadata.fontFile}`);
+  } else if (fontFamily) {
+    // Use system font name (FFmpeg will search for it)
+    drawtextParams.splice(1, 0, `font='${fontFamily}'`);
+  }
 
   // Position
   drawtextParams.push(`x=${x}`);

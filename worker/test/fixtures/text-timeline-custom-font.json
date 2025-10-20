@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "inputs": {
+    "source1": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "text_with_system_font": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "使用系统字体",
+        "fontFamily": "Arial",
+        "fontSize": 60,
+        "fontColor": "#FFFFFF"
+      }
+    },
+    "text_with_custom_font": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "使用自定义字体文件",
+        "fontFile": "/hhhh/Supplemental/Arial777.ttf",
+        "fontSize": 48,
+        "fontColor": "#00FF00",
+        "backgroundColor": "#00000080"
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "background_clip",
+          "source": "source1",
+          "timelineTrackStart": 0,
+          "duration": 6,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "text_track_1": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "system_font_text",
+          "source": "text_with_system_font",
+          "timelineTrackStart": 0.5,
+          "duration": 2.5,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 660,
+            "y": 200,
+            "width": 600,
+            "height": 100,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "text_track_2": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "custom_font_text",
+          "source": "text_with_custom_font",
+          "timelineTrackStart": 3.5,
+          "duration": 2.5,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 360,
+            "y": 800,
+            "width": 1200,
+            "height": 80,
+            "rotation": 0,
+            "opacity": 0.9
+          }
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": ["-pix_fmt", "yuv420p"],
+    "startPosition": 0,
+    "endPosition": 6,
+    "scaleRatio": 0.2
+  }
+}
