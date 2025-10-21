@@ -33,11 +33,11 @@ try {
   console.log(command);
 
   // Save to file
-  fs.writeFileSync('test-gif-output.sh', command);
-  console.log('\n✓ Command saved to test-gif-output.sh');
+  fs.writeFileSync('scripts/tests/test-gif-output.sh', command);
+  console.log('\n✓ Command saved to scripts/tests/test-gif-output.sh');
   console.log('\nTo execute the command:');
-  console.log('  chmod +x test-gif-output.sh');
-  console.log('  ./test-gif-output.sh');
+  console.log('  chmod +x scripts/tests/test-gif-output.sh');
+  console.log('  ./scripts/tests/test-gif-output.sh');
 
   // Analyze the command for GIF-specific features
   console.log('\n=== Command Analysis ===');

@@ -281,3 +281,4 @@ C:/Windows/Fonts/msyh.ttc  (微软雅黑)
 
 - [TEXT_RENDERING_IMPLEMENTATION.md](TEXT_RENDERING_IMPLEMENTATION.md) - 实现细节
 - [worker/test/fixtures/text-timeline-custom-font.json](worker/test/fixtures/text-timeline-custom-font.json) - 完整示例
+

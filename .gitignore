@@ -133,3 +133,5 @@ dist
 outputs/
 output.mp4
 tmp
+.DS_Store
+out/

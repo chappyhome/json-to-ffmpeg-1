@@ -33,11 +33,11 @@ try {
   console.log(command);
 
   // Save to file
-  fs.writeFileSync('test-audio-types-output.sh', command);
-  console.log('\n✓ Command saved to test-audio-types-output.sh');
+  fs.writeFileSync('scripts/tests/test-audio-types-output.sh', command);
+  console.log('\n✓ Command saved to scripts/tests/test-audio-types-output.sh');
   console.log('\nTo execute the command:');
-  console.log('  chmod +x test-audio-types-output.sh');
-  console.log('  ./test-audio-types-output.sh');
+  console.log('  chmod +x scripts/tests/test-audio-types-output.sh');
+  console.log('  ./scripts/tests/test-audio-types-output.sh');
 
   // Analyze the command for audio-specific features
   console.log('\n=== Command Analysis ===');
