@@ -1,4 +1,4 @@
-import { ImageClip, VideoClip } from "./types/Clip";
+import { VideoClip } from "./types/Clip";
 import { findInputIndex } from "./utils/findInputIndex";
 import { Output } from "./types/Output";
 import { getRandomUID } from "./utils/uid";
@@ -6,6 +6,7 @@ import { InputFiles } from "./types/InputFiles";
 
 /**
  * Parse a video clip object schema and return a ffmpeg filter command.
+ * Note: Image clips are now handled by parseImageClip.ts
  * @param clip
  * @param output
  * @param inputFiles
@@ -15,7 +16,7 @@ export function parseVideoClip({
   output,
   inputFiles,
 }: {
-  clip: VideoClip | ImageClip;
+  clip: VideoClip;
   output: Output;
   inputFiles: InputFiles;
 }): string {
@@ -28,36 +29,10 @@ export function parseVideoClip({
   const x = Math.round(transform.x * output.scaleRatio);
   const y = Math.round(transform.y * output.scaleRatio);
 
-  let inputIndex = 0;
-  if (clipType === "video") {
-    inputIndex = findInputIndex(inputFiles, name);
-  } else {
-    inputIndex = findInputIndex(inputFiles, source);
-  }
+  // Video clips use the clip name to find the input index
+  const inputIndex = findInputIndex(inputFiles, name);
 
   let filters: string[] = [];
-
-  if (clipType === "image") {
-    /**
-     * The loop filter is used to extend length of the image video stream.
-     * By default, is only one frame long.
-     */
-    filters.push(
-      `loop=loop=${duration * output.framerate}:size=${
-        duration * output.framerate
-      }`,
-    );
-
-    /**
-     * Set the start offset of the image video stream.
-     */
-    filters.push(`setpts=PTS-STARTPTS`);
-
-    /**
-     * Set framerate to the output framerate.
-     */
-    filters.push(`fps=${output.framerate}`);
-  }
 
   /**
    * Scale the clip to the correct size.

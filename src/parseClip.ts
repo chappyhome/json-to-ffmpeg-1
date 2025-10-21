@@ -1,5 +1,6 @@
 import { Clip } from "./types/Clip";
 import { parseVideoClip } from "./parseVideoClip";
+import { parseImageClip } from "./parseImageClip";
 import { parseAudioClip } from "./parseAudioClip";
 import { parseTextClip } from "./parseTextClip";
 import { Output } from "./types/Output";
@@ -27,8 +28,10 @@ export function parseClip({
 }): string {
   let clipString = "";
 
-  if (clip.clipType === "video" || clip.clipType === "image") {
+  if (clip.clipType === "video") {
     clipString += parseVideoClip({ clip, inputFiles, output });
+  } else if (clip.clipType === "image") {
+    clipString += parseImageClip({ clip, inputFiles, output, inputs });
   } else if (clip.clipType === "audio") {
     clipString += parseAudioClip({ clip, inputFiles });
   } else if (clip.clipType === "text") {

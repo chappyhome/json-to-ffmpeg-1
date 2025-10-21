@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "inputs": {
+    "background_video": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "static_watermark": {
+      "type": "image",
+      "file": "samples/flower.png",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "static",
+        "format": "png"
+      }
+    },
+    "animated_emoji": {
+      "type": "image",
+      "file": "samples/emoji.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 2.5,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "frameRate": 24
+      }
+    },
+    "one_time_gif": {
+      "type": "image",
+      "file": "samples/loading.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 1.0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": false,
+        "frameRate": 30
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "background_clip",
+          "source": "background_video",
+          "timelineTrackStart": 0,
+          "duration": 10,
+          "sourceStartOffset": 5,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "static_image_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "watermark_clip",
+          "source": "static_watermark",
+          "timelineTrackStart": 0,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 1620,
+            "y": 10,
+            "width": 280,
+            "height": 140,
+            "rotation": 0,
+            "opacity": 0.8
+          }
+        }
+      ]
+    },
+    "animated_gif_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "emoji_clip",
+          "source": "animated_emoji",
+          "timelineTrackStart": 2,
+          "duration": 5,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 50,
+            "y": 50,
+            "width": 200,
+            "height": 200,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "one_time_gif_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "loading_clip",
+          "source": "one_time_gif",
+          "timelineTrackStart": 8,
+          "duration": 2,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 860,
+            "y": 490,
+            "width": 200,
+            "height": 100,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-gif-test.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 10,
+    "scaleRatio": 1.0
+  }
+}

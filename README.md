@@ -8,6 +8,7 @@ Because of JSON it's much easier to create and edit video timeline and it's much
 ### Features
 * Supports video, audio, image and **text** sources
 * **Text rendering**: Dynamic text with customizable fonts, colors, shadows, and strokes
+* **GIF animation**: Support for animated GIFs with loop control and custom frame rates
 * Clip transformation: scale, position, rotation, opacity
 * Clip transitions from/to and cross-fade: fade, smoothup, smoothdown, circlecrop, squeezev, squeezeh and more
 * For non-linear video editing with multiple tracks and clips
@@ -540,6 +541,62 @@ This library now supports dynamic text rendering directly in your videos! Add ti
 - Full opacity support
 
 📖 **[Read the full Text Rendering documentation](docs/TEXT_RENDERING.md)**
+
+## GIF Animation (New! ✨)
+
+This library now supports animated GIFs with full control over looping and frame rates!
+
+### Quick Example
+
+```json
+{
+  "inputs": {
+    "animated_emoji": {
+      "type": "image",
+      "file": "samples/emoji.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 2.5,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "frameRate": 24
+      }
+    }
+  },
+  "tracks": {
+    "emoji_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "emoji_clip",
+          "source": "animated_emoji",
+          "timelineTrackStart": 2,
+          "duration": 5,
+          "clipType": "image",
+          "transform": {
+            "x": 50,
+            "y": 50,
+            "width": 200,
+            "height": 200,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**Features:**
+- Support for both static images and animated GIFs
+- Loop control (`loop: true/false`)
+- Custom frame rates
+- All standard transformations (position, scale, rotation, opacity)
+
+📖 **[Read the full GIF Animation documentation](docs/GIF_ANIMATION.md)**
 
 ## Video, audio and image test samples
 All samples are from [Pixabay](https://pixabay.com/). All samples are licensed under [Pixabay License](https://pixabay.com/service/license/).
