@@ -14,6 +14,11 @@ json-to-ffmpeg now supports audio type classification through `AudioMetadata`, e
   - Precise timing with adelay filter
   - Multiple instances can trigger at different times
   - Optional fade-in and fade-out
+- ✅ Support for Narration (Voice/Dialogue)
+  - Synchronized SRT subtitle support
+  - Customizable subtitle styling
+  - Professional fade-in and fade-out
+  - Multi-language support
 - ✅ Backward compatible (defaults to SFX behavior)
 - ✅ Automatic audio mixing with amix filter
 
@@ -47,6 +52,26 @@ Sound effects are designed for precise timing triggers at specific timeline posi
 - Multiple SFX can exist on same track
 - Uses adelay filter for precise timing
 - Optional subtle fades for smoother playback
+
+### Narration (Voice/Dialogue)
+
+Narration provides voiceover with synchronized subtitle support for professional video content.
+
+**Use cases:**
+- Tutorial voiceovers
+- Documentary narration
+- Presentation commentary
+- Educational content
+- Podcast overlays
+
+**Characteristics:**
+- One or more narration clips per timeline
+- SRT subtitle integration with customizable styling
+- Professional fade-in and fade-out
+- Multi-language support with metadata
+- Automatically mixed with BGM and SFX
+
+📖 **[Read the full Narration documentation](./NARRATION.md)**
 
 ## Usage
 
@@ -423,20 +448,23 @@ All existing audio configurations continue to work:
 
 1. **BGM timing:** BGM always starts at timelineTrackStart (no delay)
 2. **Loop precision:** aloop uses large sample count for simplicity
-3. **Narration:** Not yet implemented
+3. **Narration subtitles:** Applied to entire video timeline (not clip-specific timing)
 
 ### Future Enhancements
 
-- [ ] Narration audio type with subtitle sync
+- [x] ~~Narration audio type with subtitle sync~~ **Implemented!**
 - [ ] Advanced looping with precise sample count
-- [ ] Audio ducking (lower BGM when SFX plays)
+- [ ] Audio ducking (lower BGM when narration/SFX plays)
 - [ ] Cross-fade between BGM clips
 - [ ] Per-clip audio effects (EQ, reverb, etc.)
+- [ ] Narration subtitle timing offset (independent of audio)
+- [ ] Multiple subtitle tracks per narration
 
 ## Related Documentation
 
 - [AudioMetadata Type Definition](../src/types/Inputs.ts)
 - [parseAudioClip Implementation](../src/parseAudioClip.ts)
+- [Narration Documentation](./NARRATION.md) ⭐ **New!**
 - [Design Documents](../AUDIO_TYPE_DESIGN_INDEX.md)
 - [Text Rendering Documentation](./TEXT_RENDERING.md)
 - [GIF Animation Documentation](./GIF_ANIMATION.md)

@@ -4,8 +4,15 @@ import { VideoEditorFormat } from "./types/VideoEditingFormat";
  * Parse output schema object and return command
  * with flags and arguments configured in options.
  * @param schema
+ * @param videoStreamName - Name of the final video stream (default: "video_output")
  */
-export function parseOutput({ schema }: { schema: VideoEditorFormat }): string {
+export function parseOutput({
+  schema,
+  videoStreamName = "video_output",
+}: {
+  schema: VideoEditorFormat;
+  videoStreamName?: string;
+}): string {
   let outputCommand = "";
 
   const {
@@ -29,7 +36,7 @@ export function parseOutput({ schema }: { schema: VideoEditorFormat }): string {
   const renderHeight = Math.round(height * scaleRatio);
   const resolution = `${renderWidth}x${renderHeight}`;
 
-  outputCommand += `-map '[video_output]' -map '[audio_output]' -c:v ${videoCodec} -c:a ${audioCodec} -b:a ${audioBitrate} -r ${framerate} -s ${resolution} -ss ${startPosition} -t ${
+  outputCommand += `-map '[${videoStreamName}]' -map '[audio_output]' -c:v ${videoCodec} -c:a ${audioCodec} -b:a ${audioBitrate} -r ${framerate} -s ${resolution} -ss ${startPosition} -t ${
     endPosition - startPosition
   } -crf ${crf} -preset ${preset} ${additionalFlags} ${file}`;
 

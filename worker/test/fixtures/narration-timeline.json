@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "background_music": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 1.0,
+        "fadeOut": 1.0
+      }
+    },
+    "narration_voice": {
+      "type": "audio",
+      "file": "samples/narration.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 10,
+      "metadata": {
+        "audioType": "narration",
+        "fadeIn": 0.3,
+        "fadeOut": 0.3,
+        "subtitleFile": "worker/test/fixtures/narration.srt",
+        "subtitleStyle": {
+          "fontFamily": "Arial",
+          "fontSize": 28,
+          "fontColor": "#FFFFFF",
+          "backgroundColor": "#00000099",
+          "position": "bottom",
+          "marginV": 30
+        },
+        "language": "en",
+        "speaker": "Narrator"
+      }
+    },
+    "click_sound": {
+      "type": "audio",
+      "file": "samples/click.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 186.037324,
+      "metadata": {
+        "audioType": "sfx",
+        "fadeIn": 0.05,
+        "fadeOut": 0.05
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "video_clip",
+          "source": "main_video",
+          "timelineTrackStart": 0,
+          "duration": 12,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_clip",
+          "source": "background_music",
+          "timelineTrackStart": 0,
+          "duration": 12,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.4
+        }
+      ]
+    },
+    "narration_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "narration_clip",
+          "source": "narration_voice",
+          "timelineTrackStart": 1,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0
+        }
+      ]
+    },
+    "sfx_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "click1",
+          "source": "click_sound",
+          "timelineTrackStart": 2.5,
+          "duration": 0.3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.8
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-narration-test.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 12,
+    "scaleRatio": 1.0
+  }
+}

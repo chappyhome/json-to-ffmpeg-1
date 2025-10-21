@@ -109,6 +109,27 @@ export function parseAudioClip({
       const fadeOutStart = duration - fadeOutDuration;
       filters.push(`afade=t=out:st=${fadeOutStart}:d=${fadeOutDuration}`);
     }
+
+  } else if (audioType === "narration") {
+    /**
+     * Narration (Voice/Dialogue) processing:
+     * - Similar to SFX for audio timing (no looping)
+     * - Optional fade-in/out for professional sound
+     * - Subtitle handling is done separately in video filter chain
+     */
+
+    // Optional fade-in for narration
+    if (metadata?.fadeIn) {
+      const fadeInDuration = metadata.fadeIn;
+      filters.push(`afade=t=in:st=0:d=${fadeInDuration}`);
+    }
+
+    // Optional fade-out for narration
+    if (metadata?.fadeOut) {
+      const fadeOutDuration = metadata.fadeOut;
+      const fadeOutStart = duration - fadeOutDuration;
+      filters.push(`afade=t=out:st=${fadeOutStart}:d=${fadeOutDuration}`);
+    }
   }
 
   /**

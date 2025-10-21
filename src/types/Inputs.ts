@@ -25,7 +25,7 @@ export type AudioMetadata = {
    * Type of audio content:
    * - bgm: Background music (single instance, continuous playback with fade in/out and looping)
    * - sfx: Sound effects (multiple instances, precise timing triggers)
-   * - narration: Dialogue/voiceover (planned for future)
+   * - narration: Dialogue/voiceover with subtitle support
    * Default: "sfx"
    */
   audioType?: "bgm" | "sfx" | "narration";
@@ -39,18 +39,45 @@ export type AudioMetadata = {
 
   /**
    * Duration in seconds for audio fade-in at the start of the clip
-   * Applies to both BGM and SFX
+   * Applies to BGM, SFX, and narration
    */
   fadeIn?: number;
 
   /**
    * Duration in seconds for audio fade-out at the end of the clip
-   * Applies to both BGM and SFX
+   * Applies to BGM, SFX, and narration
    */
   fadeOut?: number;
 
-  /** Subtitle text for the audio (future use) */
-  subtitle?: string;
+  /**
+   * URL to SRT subtitle file (for narration type)
+   * Will be downloaded to temp directory before processing
+   */
+  subtitleUrl?: string;
+
+  /**
+   * Local path to SRT subtitle file (for narration type)
+   * Takes precedence over subtitleUrl if both are provided
+   */
+  subtitleFile?: string;
+
+  /**
+   * Subtitle styling options (for narration type)
+   */
+  subtitleStyle?: {
+    /** Font family name (e.g., "Arial", "Helvetica") */
+    fontFamily?: string;
+    /** Font size in points */
+    fontSize?: number;
+    /** Primary text color in hex format (e.g., "#FFFFFF") */
+    fontColor?: string;
+    /** Background color in hex format with optional alpha (e.g., "#00000080") */
+    backgroundColor?: string;
+    /** Vertical position of subtitles */
+    position?: "top" | "bottom" | "middle";
+    /** Vertical margin in pixels */
+    marginV?: number;
+  };
 
   /** Language code (e.g., "en", "zh-CN") */
   language?: string;

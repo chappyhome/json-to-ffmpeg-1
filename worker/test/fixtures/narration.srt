@@ -1,0 +1,12 @@
+1
+00:00:00,050 --> 00:00:02,775
+Welcome to our video presentation.
+
+2
+00:00:02,775 --> 00:00:07,600
+Today we'll explore amazing features of JSON to FFmpeg conversion.
+
+3
+00:00:07,600 --> 00:00:09,462
+Let's get started!
+

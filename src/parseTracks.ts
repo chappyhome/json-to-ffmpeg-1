@@ -3,12 +3,15 @@ import { parseTrack } from "./parseTrack";
 import { calculateTotalLength } from "./calculateTotalLength";
 import { getRandomUID } from "./utils/uid";
 import { InputFiles } from "./types/InputFiles";
+import { AudioMetadata } from "./types/Inputs";
+import { generateSubtitleFilter } from "./utils/parseSubtitle";
 
 /**
  * Loop over each track, parse it, and combine
  * as two streams. One for video and one for audio.
  * @param schema
  * @param inputFiles
+ * @returns Object containing filterComplex command and final video stream name
  */
 export function parseTracks({
   schema,
@@ -16,7 +19,7 @@ export function parseTracks({
 }: {
   schema: VideoEditorFormat;
   inputFiles: InputFiles;
-}): string {
+}): { filterComplex: string; finalVideoStream: string } {
   const totalLength = calculateTotalLength(schema.tracks, schema.transitions);
 
   /**
@@ -70,6 +73,61 @@ export function parseTracks({
   }
 
   /**
+   * Collect all narration clips with subtitles and apply subtitle filters
+   * to the final video output
+   */
+  const narrationClipsWithSubtitles: Array<{
+    subtitlePath: string;
+    metadata: AudioMetadata;
+  }> = [];
+
+  // Scan all audio tracks for narration clips with subtitles
+  for (const [, track] of audioTracks) {
+    if (track.clips) {
+      for (const clip of track.clips) {
+        if (clip.clipType === "audio") {
+          const source = schema.inputs[clip.source];
+          const metadata = source?.metadata as AudioMetadata | undefined;
+
+          if (metadata?.audioType === "narration") {
+            // Check if subtitle file is provided (local path takes precedence)
+            const subtitlePath = metadata.subtitleFile || metadata.subtitleUrl;
+            if (subtitlePath) {
+              narrationClipsWithSubtitles.push({
+                subtitlePath,
+                metadata,
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Apply subtitle filters to video output
+  // Note: For simplicity, we're applying all subtitles sequentially
+  // In a real scenario, you might want to handle timing more precisely
+  let finalVideoStream = "video_output";
+
+  if (narrationClipsWithSubtitles.length > 0) {
+    let currentVideoStream = "video_output";
+
+    for (let i = 0; i < narrationClipsWithSubtitles.length; i++) {
+      const { subtitlePath, metadata } = narrationClipsWithSubtitles[i];
+      const subtitleFilter = generateSubtitleFilter(subtitlePath, metadata);
+      const outputStream =
+        i === narrationClipsWithSubtitles.length - 1
+          ? "video_with_subtitles"
+          : `${getRandomUID(8)}_subtitle_${i}`;
+
+      tracksCommand += `[${currentVideoStream}]${subtitleFilter}[${outputStream}];\n`;
+      currentVideoStream = outputStream;
+    }
+
+    finalVideoStream = currentVideoStream;
+  }
+
+  /**
    * Audio tracks are combined by mixing them together.
    * The output of the mix is the final audio stream.
    */
@@ -84,5 +142,8 @@ export function parseTracks({
     tracksCommand += `anullsrc=channel_layout=stereo:sample_rate=44100:d=${totalLength}[audio_output];`;
   }
 
-  return tracksCommand;
+  return {
+    filterComplex: tracksCommand,
+    finalVideoStream,
+  };
 }

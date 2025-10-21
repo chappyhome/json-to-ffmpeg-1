@@ -9,7 +9,11 @@ Because of JSON it's much easier to create and edit video timeline and it's much
 * Supports video, audio, image and **text** sources
 * **Text rendering**: Dynamic text with customizable fonts, colors, shadows, and strokes
 * **GIF animation**: Support for animated GIFs with loop control and custom frame rates
-* **Audio type classification**: BGM (background music) with looping/fading and SFX (sound effects) with precise timing
+* **Audio type classification**:
+  - BGM (background music) with looping/fading
+  - SFX (sound effects) with precise timing
+  - **Narration** with synchronized SRT subtitles
+* **Subtitle support**: SRT subtitle integration with customizable styling
 * Clip transformation: scale, position, rotation, opacity
 * Clip transitions from/to and cross-fade: fade, smoothup, smoothdown, circlecrop, squeezev, squeezeh and more
 * For non-linear video editing with multiple tracks and clips
@@ -667,9 +671,70 @@ Support for specialized audio handling with BGM (background music) and SFX (soun
   - Multiple SFX can trigger at different times
   - Optional fade-in and fade-out
 
+- **Narration (Voice/Dialogue)**:
+  - Synchronized SRT subtitle support
+  - Customizable subtitle styling (font, color, position)
+  - Professional fade-in and fade-out
+  - Multi-language support
+
 - **Automatic Mixing**: Tracks are automatically mixed using FFmpeg's `amix` filter
 
 📖 **[Read the full Audio Types documentation](docs/AUDIO_TYPES.md)**
+
+## Narration with Subtitles (New! ✨)
+
+Add voiceover with synchronized subtitles to your videos!
+
+### Quick Example
+
+```json
+{
+  "inputs": {
+    "narration_voice": {
+      "type": "audio",
+      "file": "samples/narration.mp3",
+      "duration": 10,
+      "metadata": {
+        "audioType": "narration",
+        "fadeIn": 0.3,
+        "fadeOut": 0.3,
+        "subtitleFile": "subtitles/narration.srt",
+        "subtitleStyle": {
+          "fontFamily": "Arial",
+          "fontSize": 28,
+          "fontColor": "#FFFFFF",
+          "backgroundColor": "#00000099",
+          "position": "bottom",
+          "marginV": 30
+        },
+        "language": "en",
+        "speaker": "Narrator"
+      }
+    }
+  },
+  "tracks": {
+    "narration_track": {
+      "type": "audio",
+      "clips": [{
+        "name": "narration_clip",
+        "source": "narration_voice",
+        "timelineTrackStart": 1,
+        "duration": 10,
+        "volume": 1.0
+      }]
+    }
+  }
+}
+```
+
+**Features:**
+- SRT subtitle file integration
+- Customizable fonts, colors, and positioning
+- Professional audio fade effects
+- Multi-language support
+- Automatic mixing with BGM and SFX
+
+📖 **[Read the full Narration documentation](docs/NARRATION.md)**
 
 ## Video, audio and image test samples
 All samples are from [Pixabay](https://pixabay.com/). All samples are licensed under [Pixabay License](https://pixabay.com/service/license/).

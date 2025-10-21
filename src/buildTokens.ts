@@ -41,7 +41,7 @@ export function buildTokens(
   tokens.push(...inputArgs);
 
   // Build filter complex
-  const filterComplex = parseTracks({
+  const { filterComplex, finalVideoStream } = parseTracks({
     schema,
     inputFiles,
   });
@@ -49,7 +49,7 @@ export function buildTokens(
   tokens.push('-filter_complex', filterComplex);
 
   // Parse output arguments
-  const outputCommand = parseOutput({ schema });
+  const outputCommand = parseOutput({ schema, videoStreamName: finalVideoStream });
   const outputArgs = outputCommand
     .trim()
     .split(/\s+/)
