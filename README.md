@@ -9,6 +9,7 @@ Because of JSON it's much easier to create and edit video timeline and it's much
 * Supports video, audio, image and **text** sources
 * **Text rendering**: Dynamic text with customizable fonts, colors, shadows, and strokes
 * **GIF animation**: Support for animated GIFs with loop control and custom frame rates
+* **Audio type classification**: BGM (background music) with looping/fading and SFX (sound effects) with precise timing
 * Clip transformation: scale, position, rotation, opacity
 * Clip transitions from/to and cross-fade: fade, smoothup, smoothdown, circlecrop, squeezev, squeezeh and more
 * For non-linear video editing with multiple tracks and clips
@@ -597,6 +598,78 @@ This library now supports animated GIFs with full control over looping and frame
 - All standard transformations (position, scale, rotation, opacity)
 
 📖 **[Read the full GIF Animation documentation](docs/GIF_ANIMATION.md)**
+
+## Audio Type Classification (New! ✨)
+
+Support for specialized audio handling with BGM (background music) and SFX (sound effects)!
+
+### Quick Example
+
+```json
+{
+  "inputs": {
+    "background_music": {
+      "type": "audio",
+      "file": "samples/bgm.mp3",
+      "duration": 3.5,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 1.5,
+        "fadeOut": 1.0
+      }
+    },
+    "button_click": {
+      "type": "audio",
+      "file": "samples/click.wav",
+      "duration": 0.3,
+      "metadata": {
+        "audioType": "sfx",
+        "fadeIn": 0.05,
+        "fadeOut": 0.05
+      }
+    }
+  },
+  "tracks": {
+    "bgm_track": {
+      "type": "audio",
+      "clips": [{
+        "name": "bgm_clip",
+        "source": "background_music",
+        "timelineTrackStart": 0,
+        "duration": 10,
+        "volume": 0.6
+      }]
+    },
+    "sfx_track": {
+      "type": "audio",
+      "clips": [{
+        "name": "click1",
+        "source": "button_click",
+        "timelineTrackStart": 1.5,
+        "duration": 0.3,
+        "volume": 1.0
+      }]
+    }
+  }
+}
+```
+
+### Key Features
+
+- **BGM (Background Music)**:
+  - Automatic looping when source is shorter than clip duration
+  - Smooth fade-in and fade-out
+  - Typically one BGM per timeline
+
+- **SFX (Sound Effects)**:
+  - Precise timing with `adelay` filter based on `timelineTrackStart`
+  - Multiple SFX can trigger at different times
+  - Optional fade-in and fade-out
+
+- **Automatic Mixing**: Tracks are automatically mixed using FFmpeg's `amix` filter
+
+📖 **[Read the full Audio Types documentation](docs/AUDIO_TYPES.md)**
 
 ## Video, audio and image test samples
 All samples are from [Pixabay](https://pixabay.com/). All samples are licensed under [Pixabay License](https://pixabay.com/service/license/).

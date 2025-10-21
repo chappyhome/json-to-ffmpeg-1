@@ -57,12 +57,26 @@ export function parseTrack({
   let previousClipEndTime = 0;
 
   /**
+   * Check if all audio clips are SFX (sound effects) early.
+   * This determines whether we need to create gaps.
+   */
+  const allClipsAreSFX = track.type === "audio" && track.clips.every((clip) => {
+    if (clip.clipType !== "audio") return false;
+    const input = inputs[clip.source];
+    const metadata = input?.metadata as any;
+    const audioType = metadata?.audioType || "sfx";
+    return audioType === "sfx";
+  });
+
+  /**
    * Fill all gaps between clips with transparent video or silence,
    * add the gap to the clipsCommand, add the gap label to the concat array,
    * add the clip to the concat array.
+   *
+   * Skip gap creation for SFX tracks since they use amix with adelay for timing.
    */
   for (const clip of track.clips) {
-    if (clip.timelineTrackStart > previousClipEndTime) {
+    if (!allClipsAreSFX && clip.timelineTrackStart > previousClipEndTime) {
       const gap = getGapFiller({
         trackType: track.type,
         output,
@@ -90,8 +104,10 @@ export function parseTrack({
    * If the last clip ends before the totalLength of the video, fill the gap
    * with transparent video or silence, add the gap to the clipsCommand, add
    * the gap label to the concat array.
+   *
+   * Skip gap creation for SFX tracks since they use apad for final padding.
    */
-  if (previousClipEndTime < totalLength) {
+  if (!allClipsAreSFX && previousClipEndTime < totalLength) {
     const gap = getGapFiller({
       trackType: track.type,
       output,
@@ -277,11 +293,66 @@ export function parseTrack({
   }
 
   if (track.type === "audio") {
-    for (const clip of clipsToConcat) {
-      clipsCommand += `[${clip.label}]`;
-    }
+    /**
+     * Use the allClipsAreSFX flag from earlier to decide processing method.
+     * SFX clips use adelay for precise timing and should be mixed with amix instead of concat.
+     * BGM (background music) clips should use concat as they need sequential playback.
+     */
 
-    clipsCommand += `concat=n=${clipsToConcat.length}:v=0:a=1[${trackName}];\n`;
+    if (allClipsAreSFX && track.clips.length > 0) {
+      /**
+       * For SFX tracks: use amix to combine all sound effects.
+       * Each SFX clip needs front padding (silence) to position it at the correct timeline position.
+       * Strategy: anullsrc (silence) + concat (SFX) to create properly timed clips, then amix them.
+       */
+
+      const paddedClipLabels: string[] = [];
+
+      for (let i = 0; i < track.clips.length; i++) {
+        const clip = track.clips[i];
+        const clipData = clipsToConcat.find(c => c.label === clip.name && !c.isGap);
+        if (!clipData) continue;
+
+        const paddedLabel = `${clip.name}_padded`;
+
+        if (clip.timelineTrackStart > 0) {
+          // Create silence for the delay
+          const silenceLabel = `silence_${clip.name}`;
+          clipsCommand += `anullsrc=channel_layout=stereo:sample_rate=44100:d=${clip.timelineTrackStart}[${silenceLabel}];\n`;
+
+          // Concat silence + audio clip
+          clipsCommand += `[${silenceLabel}][${clip.name}]concat=n=2:v=0:a=1[${paddedLabel}];\n`;
+        } else {
+          // No delay needed, use clip directly
+          clipsCommand += `[${clip.name}]acopy[${paddedLabel}];\n`;
+        }
+
+        paddedClipLabels.push(paddedLabel);
+      }
+
+      if (paddedClipLabels.length === 1) {
+        // Single SFX: just pad with silence to match total length
+        const clipLabel = paddedClipLabels[0];
+        clipsCommand += `[${clipLabel}]apad=whole_dur=${totalLength}[${trackName}];\n`;
+      } else if (paddedClipLabels.length > 1) {
+        // Multiple SFX: use amix to combine them, then pad to total length
+        for (const label of paddedClipLabels) {
+          clipsCommand += `[${label}]`;
+        }
+        clipsCommand += `amix=inputs=${paddedClipLabels.length}:duration=longest[${trackName}_premix];\n`;
+        clipsCommand += `[${trackName}_premix]apad=whole_dur=${totalLength}[${trackName}];\n`;
+      }
+    } else {
+      /**
+       * For BGM or mixed tracks: use concat as before.
+       * This handles sequential playback with gaps.
+       */
+      for (const clip of clipsToConcat) {
+        clipsCommand += `[${clip.label}]`;
+      }
+
+      clipsCommand += `concat=n=${clipsToConcat.length}:v=0:a=1[${trackName}];\n`;
+    }
   }
 
   return clipsCommand;

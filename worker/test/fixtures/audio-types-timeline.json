@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "background_music": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": false,
+        "fadeIn": 1.5,
+        "fadeOut": 1.0
+      }
+    },
+    "button_click": {
+      "type": "audio",
+      "file": "samples/click.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 186.037324,
+      "metadata": {
+        "audioType": "sfx",
+        "fadeIn": 0.05,
+        "fadeOut": 0.05
+      }
+    },
+    "notification": {
+      "type": "audio",
+      "file": "samples/notification.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 78.919478,
+      "metadata": {
+        "audioType": "sfx"
+      }
+    },
+    "transition_whoosh": {
+      "type": "audio",
+      "file": "samples/whoosh.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 180.0,
+      "metadata": {
+        "audioType": "sfx",
+        "fadeIn": 0.1,
+        "fadeOut": 0.2
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "video_clip",
+          "source": "main_video",
+          "timelineTrackStart": 0,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_clip",
+          "source": "background_music",
+          "timelineTrackStart": 0,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.6
+        }
+      ]
+    },
+    "sfx_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "click1",
+          "source": "button_click",
+          "timelineTrackStart": 1.5,
+          "duration": 0.3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0
+        },
+        {
+          "name": "notification1",
+          "source": "notification",
+          "timelineTrackStart": 3.0,
+          "duration": 0.8,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.9
+        },
+        {
+          "name": "whoosh1",
+          "source": "transition_whoosh",
+          "timelineTrackStart": 5.5,
+          "duration": 1.2,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.8
+        },
+        {
+          "name": "click2",
+          "source": "button_click",
+          "timelineTrackStart": 8.0,
+          "duration": 0.3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-audio-types-test.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 10,
+    "scaleRatio": 1.0
+  }
+}

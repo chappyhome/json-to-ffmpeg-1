@@ -33,7 +33,7 @@ export function parseClip({
   } else if (clip.clipType === "image") {
     clipString += parseImageClip({ clip, inputFiles, output, inputs });
   } else if (clip.clipType === "audio") {
-    clipString += parseAudioClip({ clip, inputFiles });
+    clipString += parseAudioClip({ clip, inputFiles, inputs, output });
   } else if (clip.clipType === "text") {
     clipString += parseTextClip({ clip, output, inputs });
   }
