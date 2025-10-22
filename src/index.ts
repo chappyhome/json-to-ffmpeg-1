@@ -34,9 +34,7 @@ export function parseSchema(
   outputCommand += inputsResult.command;
   inputFiles.push(...inputsResult.inputFiles);
 
-  outputCommand += '-filter_complex "';
-
-  const { filterComplex, finalVideoStream } = parseTracks({
+  const { filterComplex, subtitleInputs } = parseTracks({
     schema,
     inputFiles,
   });
@@ -45,11 +43,13 @@ export function parseSchema(
     return filterComplex;
   }
 
+  outputCommand += '-filter_complex "';
   outputCommand += filterComplex;
   outputCommand += '" \\\n';
   outputCommand += parseOutput({
     schema,
-    videoStreamName: finalVideoStream,
+    subtitleInputs,
+    inputFileCount: inputFiles.length,
   });
 
   return outputCommand;

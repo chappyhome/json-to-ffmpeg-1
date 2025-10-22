@@ -12,8 +12,8 @@ Because of JSON it's much easier to create and edit video timeline and it's much
 * **Audio type classification**:
   - BGM (background music) with looping/fading
   - SFX (sound effects) with precise timing
-  - **Narration** with synchronized SRT subtitles
-* **Subtitle support**: SRT subtitle integration with customizable styling
+  - **Narration** with soft subtitle support (mov_text)
+* **Soft subtitle support**: SRT subtitles as embedded streams (toggleable, multi-language)
 * Clip transformation: scale, position, rotation, opacity
 * Clip transitions from/to and cross-fade: fade, smoothup, smoothdown, circlecrop, squeezev, squeezeh and more
 * For non-linear video editing with multiple tracks and clips
@@ -672,18 +672,20 @@ Support for specialized audio handling with BGM (background music) and SFX (soun
   - Optional fade-in and fade-out
 
 - **Narration (Voice/Dialogue)**:
-  - Synchronized SRT subtitle support
-  - Customizable subtitle styling (font, color, position)
+  - Soft subtitle support (embedded streams, toggleable)
+  - Direct URL support for subtitle files (Cloudflare R2, CDN)
+  - Multiple language tracks in one video
   - Professional fade-in and fade-out
-  - Multi-language support
 
 - **Automatic Mixing**: Tracks are automatically mixed using FFmpeg's `amix` filter
 
 📖 **[Read the full Audio Types documentation](docs/AUDIO_TYPES.md)**
 
-## Narration with Subtitles (New! ✨)
+## Narration with Soft Subtitles (New! ✨)
 
-Add voiceover with synchronized subtitles to your videos!
+Add voiceover with player-controllable subtitles to your videos!
+
+**Soft subtitles** are embedded as separate streams that can be toggled on/off by the player. Perfect for multi-language content and accessibility.
 
 ### Quick Example
 
@@ -698,15 +700,7 @@ Add voiceover with synchronized subtitles to your videos!
         "audioType": "narration",
         "fadeIn": 0.3,
         "fadeOut": 0.3,
-        "subtitleFile": "subtitles/narration.srt",
-        "subtitleStyle": {
-          "fontFamily": "Arial",
-          "fontSize": 28,
-          "fontColor": "#FFFFFF",
-          "backgroundColor": "#00000099",
-          "position": "bottom",
-          "marginV": 30
-        },
+        "subtitleUrl": "https://pub-example.r2.dev/subtitles/narration-en.srt",
         "language": "en",
         "speaker": "Narrator"
       }
@@ -728,11 +722,18 @@ Add voiceover with synchronized subtitles to your videos!
 ```
 
 **Features:**
-- SRT subtitle file integration
-- Customizable fonts, colors, and positioning
-- Professional audio fade effects
-- Multi-language support
-- Automatic mixing with BGM and SFX
+- ✅ Player-controllable subtitles (can be toggled on/off)
+- ✅ Direct URL support (Cloudflare R2, CDN) - no download needed
+- ✅ Multiple language tracks in one video file
+- ✅ Ultra-fast processing (no video re-encoding)
+- ✅ Professional audio fade effects
+- ✅ Automatic mixing with BGM and SFX
+
+**Why Soft Subtitles?**
+- Processing time: **10-30 seconds** (vs 8-15 minutes for hardcoded)
+- File size: **+0.1%** (vs ±10% for hardcoded)
+- Multi-language: **One file** (vs separate files for hardcoded)
+- URL support: **Direct** (vs requires download for hardcoded)
 
 📖 **[Read the full Narration documentation](docs/NARRATION.md)**
 

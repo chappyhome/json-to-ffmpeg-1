@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "narration_zh": {
+      "type": "audio",
+      "file": "samples/narration-zh.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 10,
+      "metadata": {
+        "audioType": "narration",
+        "fadeIn": 0.3,
+        "fadeOut": 0.3,
+        "subtitleUrl": "https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/narration-zh.srt",
+        "language": "zh",
+        "speaker": "Chinese Narrator"
+      }
+    },
+    "background_music": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 1.0,
+        "fadeOut": 1.0
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "video_clip",
+          "source": "main_video",
+          "timelineTrackStart": 0,
+          "duration": 12,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "narration_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "narration_zh_clip",
+          "source": "narration_zh",
+          "timelineTrackStart": 0,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_clip",
+          "source": "background_music",
+          "timelineTrackStart": 0,
+          "duration": 12,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.3
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-narration-zh.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 12,
+    "scaleRatio": 1.0
+  }
+}

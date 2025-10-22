@@ -4,14 +4,14 @@ import { calculateTotalLength } from "./calculateTotalLength";
 import { getRandomUID } from "./utils/uid";
 import { InputFiles } from "./types/InputFiles";
 import { AudioMetadata } from "./types/Inputs";
-import { generateSubtitleFilter } from "./utils/parseSubtitle";
+import { SubtitleInput } from "./utils/parseSubtitle";
 
 /**
  * Loop over each track, parse it, and combine
  * as two streams. One for video and one for audio.
  * @param schema
  * @param inputFiles
- * @returns Object containing filterComplex command and final video stream name
+ * @returns Object containing filterComplex command and subtitle inputs for soft subtitle mode
  */
 export function parseTracks({
   schema,
@@ -19,7 +19,10 @@ export function parseTracks({
 }: {
   schema: VideoEditorFormat;
   inputFiles: InputFiles;
-}): { filterComplex: string; finalVideoStream: string } {
+}): {
+  filterComplex: string;
+  subtitleInputs: SubtitleInput[];
+} {
   const totalLength = calculateTotalLength(schema.tracks, schema.transitions);
 
   /**
@@ -73,13 +76,10 @@ export function parseTracks({
   }
 
   /**
-   * Collect all narration clips with subtitles and apply subtitle filters
-   * to the final video output
+   * Collect all narration clips with subtitles for soft subtitle mode
+   * Subtitles will be added as separate input streams
    */
-  const narrationClipsWithSubtitles: Array<{
-    subtitlePath: string;
-    metadata: AudioMetadata;
-  }> = [];
+  const subtitleInputs: SubtitleInput[] = [];
 
   // Scan all audio tracks for narration clips with subtitles
   for (const [, track] of audioTracks) {
@@ -90,41 +90,44 @@ export function parseTracks({
           const metadata = source?.metadata as AudioMetadata | undefined;
 
           if (metadata?.audioType === "narration") {
-            // Check if subtitle file is provided (local path takes precedence)
-            const subtitlePath = metadata.subtitleFile || metadata.subtitleUrl;
-            if (subtitlePath) {
-              narrationClipsWithSubtitles.push({
-                subtitlePath,
-                metadata,
+            // Check if subtitle file is provided (local path or URL)
+            const subtitleFile = metadata.subtitleFile;
+            const subtitleUrl = metadata.subtitleUrl;
+            const url = subtitleFile || subtitleUrl;
+
+            if (url) {
+              // Warn if subtitleStyle is used (not supported in soft subtitle mode)
+              if (metadata.subtitleStyle) {
+                console.warn(
+                  `Warning: subtitleStyle is not supported in soft subtitle mode for clip "${clip.name}". ` +
+                  `Subtitle styling depends on the player.`
+                );
+              }
+
+              const timelineStart = clip.timelineTrackStart || 0;
+
+              // Warn if subtitle timing might not match audio
+              if (timelineStart > 0) {
+                console.warn(
+                  `Warning: Clip "${clip.name}" starts at ${timelineStart}s in timeline. ` +
+                  `Soft subtitle SRT timecodes MUST be adjusted to match this offset. ` +
+                  `For example, if your SRT has "00:00:00 --> 00:00:05", it should be ` +
+                  `"00:00:${String(Math.floor(timelineStart)).padStart(2, '0')} --> 00:00:${String(Math.floor(timelineStart + 5)).padStart(2, '0')}" ` +
+                  `to sync with the audio.`
+                );
+              }
+
+              subtitleInputs.push({
+                url,
+                language: metadata.language,
+                sourceClip: clip.name,
+                timelineTrackStart: timelineStart,
               });
             }
           }
         }
       }
     }
-  }
-
-  // Apply subtitle filters to video output
-  // Note: For simplicity, we're applying all subtitles sequentially
-  // In a real scenario, you might want to handle timing more precisely
-  let finalVideoStream = "video_output";
-
-  if (narrationClipsWithSubtitles.length > 0) {
-    let currentVideoStream = "video_output";
-
-    for (let i = 0; i < narrationClipsWithSubtitles.length; i++) {
-      const { subtitlePath, metadata } = narrationClipsWithSubtitles[i];
-      const subtitleFilter = generateSubtitleFilter(subtitlePath, metadata);
-      const outputStream =
-        i === narrationClipsWithSubtitles.length - 1
-          ? "video_with_subtitles"
-          : `${getRandomUID(8)}_subtitle_${i}`;
-
-      tracksCommand += `[${currentVideoStream}]${subtitleFilter}[${outputStream}];\n`;
-      currentVideoStream = outputStream;
-    }
-
-    finalVideoStream = currentVideoStream;
   }
 
   /**
@@ -144,6 +147,6 @@ export function parseTracks({
 
   return {
     filterComplex: tracksCommand,
-    finalVideoStream,
+    subtitleInputs,
   };
 }
