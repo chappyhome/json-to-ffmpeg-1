@@ -2,14 +2,15 @@
 
 const fs = require('fs');
 const path = require('path');
-const { parseSchema } = require('./dist/index.js');
+const { parseSchema } = require('../dist/index.js');
 
 console.log('╔════════════════════════════════════════════════════════════════╗');
 console.log('║          JSON-to-FFmpeg 综合功能测试                          ║');
 console.log('╚════════════════════════════════════════════════════════════════╝\n');
 
 // 读取测试timeline
-const timelineFile = path.join(__dirname, 'worker/test/fixtures/comprehensive-test.json');
+const rootDir = path.join(__dirname, '..');
+const timelineFile = path.join(rootDir, 'worker/test/fixtures/comprehensive-test.json');
 const timeline = JSON.parse(fs.readFileSync(timelineFile, 'utf8'));
 
 console.log('📋 测试场景:');
@@ -24,7 +25,7 @@ try {
   const command = parseSchema(timeline);
 
   // 写入输出文件
-  const outputFile = path.join(__dirname, 'test-comprehensive-output.sh');
+  const outputFile = path.join(rootDir, 'scripts/tests/test-comprehensive-output.sh');
   fs.writeFileSync(outputFile, command);
 
   console.log('✅ FFmpeg命令生成成功！');

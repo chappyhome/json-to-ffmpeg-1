@@ -2,13 +2,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const { parseSchema } = require('./dist/index.js');
+const { parseSchema } = require('../dist/index.js');
 
 console.log('=== Soft Subtitle Feature Test ===\n');
 console.log('Testing narration audio type with soft subtitle (mov_text) support...\n');
 
 // Read the soft subtitle timeline JSON
-const timelineFile = path.join(__dirname, 'worker/test/fixtures/soft-subtitle-timeline.json');
+const rootDir = path.join(__dirname, '..');
+const timelineFile = path.join(rootDir, 'worker/test/fixtures/soft-subtitle-timeline.json');
 const timeline = JSON.parse(fs.readFileSync(timelineFile, 'utf8'));
 
 try {
@@ -16,7 +17,7 @@ try {
   const command = parseSchema(timeline);
 
   // Write to output file
-  const outputFile = path.join(__dirname, 'test-soft-subtitle-output.sh');
+  const outputFile = path.join(rootDir, 'scripts/tests/test-soft-subtitle-output.sh');
   fs.writeFileSync(outputFile, command);
 
   console.log('✅ FFmpeg command generated successfully!');

@@ -2,10 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const { parseSchema } = require('./dist/index.js');
+const { parseSchema } = require('../dist/index.js');
 
 // Read the narration URL timeline JSON
-const timelineFile = path.join(__dirname, 'worker/test/fixtures/narration-url-timeline.json');
+const rootDir = path.join(__dirname, '..');
+const timelineFile = path.join(rootDir, 'worker/test/fixtures/narration-url-timeline.json');
 const timeline = JSON.parse(fs.readFileSync(timelineFile, 'utf8'));
 
 console.log('=== Narration with URL Subtitle Test ===\n');
@@ -16,7 +17,7 @@ try {
   const command = parseSchema(timeline);
 
   // Write to output file
-  const outputFile = path.join(__dirname, 'test-narration-url-output.sh');
+  const outputFile = path.join(rootDir, 'scripts/tests/test-narration-url-output.sh');
   fs.writeFileSync(outputFile, command);
 
   console.log('✅ FFmpeg command with subtitle download generated successfully!');
