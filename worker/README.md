@@ -24,6 +24,12 @@ npm run dev
 ./examples/test-with-ffmpeg.sh simple
 ```
 
+## Public API
+
+在线部署: https://json-to-ffmpeg-worker.sgqjpw2023.workers.dev
+
+详细接口文档: docs/API.md（项目根目录）
+
 ## API Endpoints
 
 ### POST /build
