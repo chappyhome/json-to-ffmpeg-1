@@ -29,10 +29,16 @@ export function parseVideoClip({
   const x = Math.round(transform.x * output.scaleRatio);
   const y = Math.round(transform.y * output.scaleRatio);
 
-  // Video clips use the clip name to find the input index
-  const inputIndex = findInputIndex(inputFiles, name);
+  // Use source input directly (no preprocessing)
+  const inputIndex = findInputIndex(inputFiles, source);
 
   let filters: string[] = [];
+
+  /**
+   * Trim the source to the desired segment and reset PTS.
+   */
+  filters.push(`trim=start=${sourceStartOffset}:duration=${duration}`);
+  filters.push(`setpts=PTS-STARTPTS`);
 
   /**
    * Scale the clip to the correct size.

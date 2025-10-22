@@ -1,0 +1,297 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 40
+    },
+    "bgm_audio": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 2.0,
+        "fadeOut": 2.0
+      }
+    },
+    "sfx_click": {
+      "type": "audio",
+      "file": "samples/click.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 0.3,
+      "metadata": {
+        "audioType": "sfx",
+        "fadeIn": 0.05,
+        "fadeOut": 0.05
+      }
+    },
+    "sfx_whoosh": {
+      "type": "audio",
+      "file": "samples/whoosh.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 1.0,
+      "metadata": {
+        "audioType": "sfx"
+      }
+    },
+    "narration_voice": {
+      "type": "audio",
+      "file": "samples/narration-zh.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 10,
+      "metadata": {
+        "audioType": "narration",
+        "fadeIn": 0.3,
+        "fadeOut": 0.3,
+        "subtitleUrl": "https://pub-8771ad71fcfd48d7b296fcba63e1b1f2.r2.dev/narration-zh.srt",
+        "language": "zh",
+        "speaker": "Chinese Narrator"
+      }
+    },
+    "static_image": {
+      "type": "image",
+      "file": "samples/logo.png",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 3,
+      "metadata": {
+        "imageType": "static"
+      }
+    },
+    "animated_gif": {
+      "type": "image",
+      "file": "samples/loading.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 3,
+      "metadata": {
+        "imageType": "animated",
+        "loop": true,
+        "frameRate": 10
+      }
+    },
+    "title_text": {
+      "type": "text",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 3,
+      "metadata": {
+        "text": "综合功能测试",
+        "fontSize": 72,
+        "fontColor": "#FFFFFF",
+        "fontFamily": "Arial",
+        "backgroundColor": "#00000080",
+        "x": "center",
+        "y": "center",
+        "shadowColor": "#000000",
+        "shadowX": 3,
+        "shadowY": 3,
+        "strokeColor": "#000000",
+        "strokeWidth": 2
+      }
+    },
+    "subtitle_text": {
+      "type": "text",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 5,
+      "metadata": {
+        "text": "Audio Types + Animation + Text Rendering",
+        "fontSize": 36,
+        "fontColor": "#FFD700",
+        "fontFamily": "Arial",
+        "x": "center",
+        "y": 900,
+        "strokeColor": "#000000",
+        "strokeWidth": 1
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "main_video_clip",
+          "source": "main_video",
+          "timelineTrackStart": 0,
+          "duration": 20,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "overlay_track_1": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "title_text_clip",
+          "source": "title_text",
+          "timelineTrackStart": 1,
+          "duration": 3,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "static_image_clip",
+          "source": "static_image",
+          "timelineTrackStart": 5,
+          "duration": 3,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 50,
+            "y": 50,
+            "width": 300,
+            "height": 300,
+            "rotation": 0,
+            "opacity": 0.8
+          }
+        },
+        {
+          "name": "animated_gif_clip",
+          "source": "animated_gif",
+          "timelineTrackStart": 9,
+          "duration": 3,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 1570,
+            "y": 50,
+            "width": 300,
+            "height": 300,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "overlay_track_2": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "subtitle_text_clip",
+          "source": "subtitle_text",
+          "timelineTrackStart": 2,
+          "duration": 5,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_clip",
+          "source": "bgm_audio",
+          "timelineTrackStart": 0,
+          "duration": 20,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.3
+        }
+      ]
+    },
+    "narration_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "narration_clip",
+          "source": "narration_voice",
+          "timelineTrackStart": 2,
+          "duration": 10,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1.0
+        }
+      ]
+    },
+    "sfx_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "click_sfx_1",
+          "source": "sfx_click",
+          "timelineTrackStart": 1,
+          "duration": 0.3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.8
+        },
+        {
+          "name": "whoosh_sfx",
+          "source": "sfx_whoosh",
+          "timelineTrackStart": 5,
+          "duration": 1.0,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.7
+        },
+        {
+          "name": "click_sfx_2",
+          "source": "sfx_click",
+          "timelineTrackStart": 9,
+          "duration": 0.3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.8
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-comprehensive-test.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 20,
+    "scaleRatio": 1.0
+  }
+}

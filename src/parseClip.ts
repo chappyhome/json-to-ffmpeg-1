@@ -28,13 +28,25 @@ export function parseClip({
 }): string {
   let clipString = "";
 
+  // Check input type to determine the correct parser
+  const input = inputs[clip.source];
+
   if (clip.clipType === "video") {
-    clipString += parseVideoClip({ clip, inputFiles, output });
+    // If the declared clip type is video but the input source is text/image,
+    // route to the proper parser to avoid unnecessary preprocessing.
+    if (input && input.type === "text") {
+      clipString += parseTextClip({ clip: clip as any, output, inputs });
+    } else if (input && input.type === "image") {
+      clipString += parseImageClip({ clip: clip as any, inputFiles, output, inputs });
+    } else {
+      clipString += parseVideoClip({ clip, inputFiles, output });
+    }
   } else if (clip.clipType === "image") {
     clipString += parseImageClip({ clip, inputFiles, output, inputs });
   } else if (clip.clipType === "audio") {
     clipString += parseAudioClip({ clip, inputFiles, inputs, output });
   } else if (clip.clipType === "text") {
+    // Support explicit text clipType as well
     clipString += parseTextClip({ clip, output, inputs });
   }
 
