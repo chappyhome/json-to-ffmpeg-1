@@ -9,7 +9,9 @@
     "build": "tsc",
     "deploy": "wrangler deploy",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:api-local": "bash ./scripts/test-worker.sh --mode local",
+    "test:api-remote": "bash ./scripts/test-worker.sh --mode remote --url $WORKER_URL"
   },
   "dependencies": {
     "json-to-ffmpeg": "file:..",

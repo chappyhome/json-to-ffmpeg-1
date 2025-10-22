@@ -1,4 +1,4 @@
-import { parseSchema } from 'json-to-ffmpeg';
+import { parseSchema, buildTokens } from 'json-to-ffmpeg';
 import { validateTimeline } from './validation';
 import { parseFFmpegArgs } from './tokenizer';
 import { PluginManager } from './plugin-manager';
@@ -8,6 +8,12 @@ import type { BuildResult, VersionInfo, HealthResponse } from './types';
 // Package version (update manually or via build process)
 const WORKER_VERSION = '1.0.0';
 const LIBRARY_VERSION = '1.2.3';
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+};
 
 /**
  * Initialize plugin manager with default plugins
@@ -34,17 +40,13 @@ async function handleBuild(request: Request): Promise<Response> {
     const pluginManager = createPluginManager();
     const { timeline, warnings } = await pluginManager.execute(validatedTimeline);
 
-    // Generate command using library
+    // Generate command and args via library
     const command = parseSchema(timeline);
-
-    // Try to use buildTokens if available, otherwise parse command
-    let args: string[];
+    let args: string[] = [];
     try {
-      // Import buildTokens dynamically
-      const { buildTokens } = await import('json-to-ffmpeg');
       args = buildTokens(timeline);
-    } catch (error) {
-      // Fallback to parsing command string
+    } catch {
+      // Fallback to parsing when tokens are unavailable
       args = parseFFmpegArgs(command);
     }
 
@@ -59,7 +61,7 @@ async function handleBuild(request: Request): Promise<Response> {
 
     return new Response(JSON.stringify(result, null, 2), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -70,7 +72,7 @@ async function handleBuild(request: Request): Promise<Response> {
       }),
       {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
       }
     );
   }
@@ -87,7 +89,7 @@ function handleVersion(): Response {
 
   return new Response(JSON.stringify(versionInfo, null, 2), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
   });
 }
 
@@ -102,7 +104,7 @@ function handleHealth(): Response {
 
   return new Response(JSON.stringify(health, null, 2), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
   });
 }
 
@@ -114,6 +116,11 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
     const method = request.method;
+
+    // CORS preflight
+    if (method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: { ...CORS_HEADERS } });
+    }
 
     // Route handlers
     if (method === 'POST' && path === '/build') {
