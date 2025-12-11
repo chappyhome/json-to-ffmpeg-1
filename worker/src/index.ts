@@ -1,5 +1,6 @@
 import { parseSchema, buildTokens } from 'json-to-ffmpeg';
 import { validateTimeline } from './validation';
+import { validateCompleteTimeline, type ValidationResult } from './validation-complete';
 import { parseFFmpegArgs } from './tokenizer';
 import { PluginManager } from './plugin-manager';
 import { normalizeOutputPlugin, validateTracksPlugin } from './plugins';
@@ -109,6 +110,54 @@ function handleHealth(): Response {
 }
 
 /**
+ * Handle POST /validate
+ * 完整验证 timeline JSON，不生成命令
+ */
+async function handleValidate(request: Request): Promise<Response> {
+  try {
+    const body = await request.json();
+    const result: ValidationResult = validateCompleteTimeline(body);
+
+    if (result.valid) {
+      return new Response(JSON.stringify({
+        valid: true,
+        message: 'Timeline JSON 验证通过',
+        warnings: result.warnings,
+      }, null, 2), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    } else {
+      return new Response(JSON.stringify({
+        valid: false,
+        message: 'Timeline JSON 验证失败',
+        errors: result.errors,
+      }, null, 2), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({
+        valid: false,
+        message: '无法解析 JSON 或验证过程出错',
+        errors: [{
+          path: '',
+          message: errorMessage,
+          code: 'PARSE_ERROR',
+        }],
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      }
+    );
+  }
+}
+
+/**
  * Main fetch handler
  */
 export default {
@@ -127,6 +176,10 @@ export default {
       return handleBuild(request);
     }
 
+    if (method === 'POST' && path === '/validate') {
+      return handleValidate(request);
+    }
+
     if (method === 'GET' && path === '/version') {
       return handleVersion();
     }
@@ -142,6 +195,7 @@ export default {
         message: `Route ${method} ${path} not found`,
         availableRoutes: [
           'POST /build - Build FFmpeg command from timeline JSON',
+          'POST /validate - Validate timeline JSON without building',
           'GET /version - Get version information',
           'GET /health - Health check',
         ],

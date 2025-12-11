@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 读取 text-timeline.json（相对于 scripts/ 目录）
-const timelinePath = path.join(__dirname, '../worker/test/fixtures/text-timeline.json');
+const timelinePath = path.join(__dirname, '../worker/test/fixtures/timeline-hotel_vertical_mix_v1-seed12345.json');
 
 try {
   const timeline = JSON.parse(fs.readFileSync(timelinePath, 'utf8'));

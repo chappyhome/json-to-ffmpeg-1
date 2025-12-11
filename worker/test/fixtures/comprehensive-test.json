@@ -82,6 +82,7 @@
     },
     "title_text": {
       "type": "text",
+      "file": "",
       "hasAudio": false,
       "hasVideo": true,
       "duration": 3,
@@ -102,6 +103,7 @@
     },
     "subtitle_text": {
       "type": "text",
+      "file": "",
       "hasAudio": false,
       "hasVideo": true,
       "duration": 5,
@@ -148,7 +150,7 @@
           "timelineTrackStart": 1,
           "duration": 3,
           "sourceStartOffset": 0,
-          "clipType": "video",
+          "clipType": "text",
           "transform": {
             "x": 0,
             "y": 0,
@@ -164,7 +166,7 @@
           "timelineTrackStart": 5,
           "duration": 3,
           "sourceStartOffset": 0,
-          "clipType": "video",
+          "clipType": "image",
           "transform": {
             "x": 50,
             "y": 50,
@@ -180,7 +182,7 @@
           "timelineTrackStart": 9,
           "duration": 3,
           "sourceStartOffset": 0,
-          "clipType": "video",
+          "clipType": "image",
           "transform": {
             "x": 1570,
             "y": 50,
@@ -201,7 +203,7 @@
           "timelineTrackStart": 2,
           "duration": 5,
           "sourceStartOffset": 0,
-          "clipType": "video",
+          "clipType": "text",
           "transform": {
             "x": 0,
             "y": 0,

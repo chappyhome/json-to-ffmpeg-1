@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video_2_0": {
+      "type": "video",
+      "file": "https://pub-xxxx.r2.dev/inputs/hotel-lobby-1.mp4",
+      "hasAudio": true,
+      "hasVideo": true,
+      "duration": 10.5
+    },
+    "watermark_9_0": {
+      "type": "image",
+      "file": "https://pub-xxxx.r2.dev/inputs/logo-hotel.png",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0
+    },
+    "bgm_6_0": {
+      "type": "audio",
+      "file": "https://pub-xxxx.r2.dev/inputs/bgm-soft-1.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 120
+    },
+    "voiceover_8_0": {
+      "type": "audio",
+      "file": "https://pub-xxxx.r2.dev/inputs/vo-hotel-intro.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 18
+    }
+  },
+  "tracks": {
+    "main_video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "main_0",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 0,
+          "duration": 5.918913071043789,
+          "sourceStartOffset": 1.4052587893271304,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_1",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 5.918913071043789,
+          "duration": 3.93682168610394,
+          "sourceStartOffset": 5.3682493983697155,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_2",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 9.85573475714773,
+          "duration": 4.037713477388024,
+          "sourceStartOffset": 2.245462720903807,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_3",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 13.893448234535754,
+          "duration": 2.295030167326331,
+          "sourceStartOffset": 6.288259894401479,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_4",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 16.188478401862085,
+          "duration": 5.987305757589638,
+          "sourceStartOffset": 3.7230742184022754,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_5",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 22.175784159451723,
+          "duration": 3.8397394940257072,
+          "sourceStartOffset": 6.299568676849518,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_6",
+          "source": "main_video_2_0",
+          "timelineTrackStart": 26.01552365347743,
+          "duration": 4.212731879518948,
+          "sourceStartOffset": 6.094523651916859,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1080,
+            "height": 1920,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "watermark_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "watermark_0",
+          "source": "watermark_9_0",
+          "timelineTrackStart": 0,
+          "duration": 30,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 913,
+            "y": 10,
+            "width": 157,
+            "height": 88,
+            "rotation": 0,
+            "opacity": 0.8
+          }
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_0",
+          "source": "bgm_6_0",
+          "timelineTrackStart": 0,
+          "duration": 30,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.3
+        }
+      ]
+    },
+    "voiceover_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "voiceover_0",
+          "source": "voiceover_8_0",
+          "timelineTrackStart": 0,
+          "duration": 18,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1
+        }
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "type": "smoothup",
+      "duration": 0.45252257406245916,
+      "from": "main_0",
+      "to": "main_1"
+    }
+  ],
+  "output": {
+    "file": "output.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1080,
+    "height": 1920,
+    "audioBitrate": "256k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 30.22825553299638
+  }
+}
