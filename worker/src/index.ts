@@ -193,6 +193,88 @@ async function handleDistribute(request: Request): Promise<Response> {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
       }
+      );
+  }
+}
+
+/**
+ * Handle POST /distribute/build
+ * 分发 -> 校验 -> 生成 FFmpeg 命令（多份输出）
+ */
+async function handleDistributeBuild(request: Request): Promise<Response> {
+  try {
+    const body = await request.json();
+    const { numOutputs, combineMode, strictNoSplit, seed, ...rest } = body as any;
+
+    const distResult = distributeTimelines(rest as any, {
+      numOutputs,
+      combineMode,
+      strictNoSplit,
+      seed,
+    });
+
+    if (!distResult.ok) {
+      return new Response(JSON.stringify(distResult, null, 2), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    }
+
+    const results = distResult.outputs.map((item: any, idx: number) => {
+      const validation = validateCompleteTimeline(item.timeline);
+      const entry: any = {
+        index: idx,
+        variantKey: item.variantKey,
+        timeline: item.timeline,
+        validation,
+      };
+
+      if (validation.valid) {
+        try {
+          const command = parseSchema(item.timeline);
+          entry.command = command;
+          try {
+            entry.args = buildTokens(item.timeline);
+          } catch {
+            entry.args = parseFFmpegArgs(command);
+          }
+        } catch (err) {
+          entry.commandError = err instanceof Error ? err.message : String(err);
+        }
+      }
+
+      return entry;
+    });
+
+    return new Response(
+      JSON.stringify(
+        {
+          ok: true,
+          strategy: distResult.strategy,
+          results,
+        },
+        null,
+        2,
+      ),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      },
+    );
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: {
+          code: 'PARSE_ERROR',
+          message: errorMessage,
+        },
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      },
     );
   }
 }
@@ -224,6 +306,10 @@ export default {
       return handleDistribute(request);
     }
 
+    if (method === 'POST' && path === '/distribute/build') {
+      return handleDistributeBuild(request);
+    }
+
     if (method === 'GET' && path === '/version') {
       return handleVersion();
     }
@@ -241,6 +327,7 @@ export default {
           'POST /build - Build FFmpeg command from timeline JSON',
           'POST /validate - Validate timeline JSON without building',
           'POST /distribute - Convert asset inventory JSON into 1..N timeline JSON outputs',
+          'POST /distribute/build - Distribute, validate, and build FFmpeg commands for each output timeline',
           'GET /version - Get version information',
           'GET /health - Health check',
         ],
