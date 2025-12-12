@@ -1,4 +1,4 @@
-import { parseSchema, buildTokens } from 'json-to-ffmpeg';
+import { parseSchema, buildTokens, distributeTimelines } from 'json-to-ffmpeg';
 import { validateTimeline } from './validation';
 import { validateCompleteTimeline, type ValidationResult } from './validation-complete';
 import { parseFFmpegArgs } from './tokenizer';
@@ -159,6 +159,45 @@ async function handleValidate(request: Request): Promise<Response> {
 }
 
 /**
+ * Handle POST /distribute
+ * 输入资产清单 + UI 配置，输出 1..N 份时间线 JSON
+ */
+async function handleDistribute(request: Request): Promise<Response> {
+  try {
+    const body = await request.json();
+    const { numOutputs, combineMode, strictNoSplit, seed, ...rest } = body as any;
+
+    const result = distributeTimelines(rest as any, {
+      numOutputs,
+      combineMode,
+      strictNoSplit,
+      seed,
+    });
+
+    const status = result.ok ? 200 : 400;
+    return new Response(JSON.stringify(result, null, 2), {
+      status,
+      headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: {
+          code: 'PARSE_ERROR',
+          message: errorMessage,
+        },
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      }
+    );
+  }
+}
+
+/**
  * Main fetch handler
  */
 export default {
@@ -181,6 +220,10 @@ export default {
       return handleValidate(request);
     }
 
+    if (method === 'POST' && path === '/distribute') {
+      return handleDistribute(request);
+    }
+
     if (method === 'GET' && path === '/version') {
       return handleVersion();
     }
@@ -197,6 +240,7 @@ export default {
         availableRoutes: [
           'POST /build - Build FFmpeg command from timeline JSON',
           'POST /validate - Validate timeline JSON without building',
+          'POST /distribute - Convert asset inventory JSON into 1..N timeline JSON outputs',
           'GET /version - Get version information',
           'GET /health - Health check',
         ],

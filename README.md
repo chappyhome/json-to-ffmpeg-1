@@ -50,6 +50,20 @@ or if you need filter complex part only:
 const filter = parseSchema(schema, true);
 ```
 
+## Distribution (asset list -> timelines)
+
+Convert an asset inventory + `uiConfig` JSON into 1..N timeline JSON outputs (ready for `parseSchema` or `/build`):
+
+```ts
+import { distributeTimelines } from 'json-to-ffmpeg';
+import manifest from './input-with-metadata.json';
+
+const result = distributeTimelines(manifest, { combineMode: 'single', numOutputs: 2 });
+// result.outputs[0].timeline -> feed into parseSchema/buildTokens
+```
+
+Prefer the HTTP API? Call `POST /distribute` on the Worker with the same payload plus optional overrides (`numOutputs`, `combineMode`, `strictNoSplit`, `seed`). See `docs/API.md` for a curl example.
+
 ## Example
 Tool translates video description from JSON to complex FFmpeg command including all required preprocessing steps, filters and transitions.
 

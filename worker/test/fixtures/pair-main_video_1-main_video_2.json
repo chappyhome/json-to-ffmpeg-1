@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "inputs": {
+    "main_video_1": {
+      "type": "video",
+      "file": "samples/bee1920.mp4",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 20
+    },
+    "main_video_2": {
+      "type": "video",
+      "file": "samples/cows1920.mp4",
+      "hasAudio": true,
+      "hasVideo": true,
+      "duration": 15
+    },
+    "watermark_1": {
+      "type": "image",
+      "file": "samples/flower.png",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "static",
+        "format": "png"
+      }
+    },
+    "sticker_1": {
+      "type": "image",
+      "file": "samples/emoji.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "frameRate": 12
+      }
+    },
+    "sticker_2": {
+      "type": "image",
+      "file": "samples/loading.gif",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "imageType": "animated",
+        "format": "gif",
+        "loop": true,
+        "frameRate": 24
+      }
+    },
+    "title_1": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "Json-to-FFmpeg Demo",
+        "fontFamily": "Arial",
+        "fontSize": 72,
+        "fontColor": "#FFFFFF",
+        "backgroundColor": "#00000000",
+        "stroke": {
+          "color": "#000000",
+          "width": 2
+        },
+        "shadow": {
+          "color": "#00000080",
+          "blur": 4,
+          "offsetX": 2,
+          "offsetY": 2
+        }
+      }
+    },
+    "subtitle_1": {
+      "type": "text",
+      "file": "",
+      "hasAudio": false,
+      "hasVideo": true,
+      "duration": 0,
+      "metadata": {
+        "text": "All sample media types in one timeline",
+        "fontFamily": "Arial",
+        "fontSize": 36,
+        "fontColor": "#FFFF00",
+        "backgroundColor": "#000000AA",
+        "textAlign": "center",
+        "boxPadding": 12
+      }
+    },
+    "bgm_1": {
+      "type": "audio",
+      "file": "samples/ever.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 181,
+      "metadata": {
+        "audioType": "bgm",
+        "loop": true,
+        "fadeIn": 2,
+        "fadeOut": 2
+      }
+    },
+    "sfx_1": {
+      "type": "audio",
+      "file": "samples/click.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 1,
+      "metadata": {
+        "audioType": "sfx"
+      }
+    },
+    "sfx_2": {
+      "type": "audio",
+      "file": "samples/whoosh.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 2,
+      "metadata": {
+        "audioType": "sfx"
+      }
+    },
+    "sfx_3": {
+      "type": "audio",
+      "file": "samples/notification.wav",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 3,
+      "metadata": {
+        "audioType": "sfx"
+      }
+    },
+    "voiceover_en": {
+      "type": "audio",
+      "file": "samples/narration-en.mp3",
+      "hasAudio": true,
+      "hasVideo": false,
+      "duration": 12,
+      "metadata": {
+        "audioType": "narration",
+        "subtitleFile": "samples/narration-en.srt",
+        "language": "en",
+        "speaker": "Narrator_EN"
+      }
+    }
+  },
+  "tracks": {
+    "video_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "main_video_1_clip",
+          "source": "main_video_1",
+          "timelineTrackStart": 0,
+          "duration": 20,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "name": "main_video_2_clip",
+          "source": "main_video_2",
+          "timelineTrackStart": 20,
+          "duration": 15,
+          "sourceStartOffset": 0,
+          "clipType": "video",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080,
+            "rotation": 0,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    "watermark_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "watermark_1_clip",
+          "source": "watermark_1",
+          "timelineTrackStart": 0,
+          "duration": 35,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 1544,
+            "y": 30,
+            "width": 346,
+            "height": 194,
+            "rotation": 0,
+            "opacity": 0.9
+          },
+          "metadata": {
+            "imageType": "static",
+            "format": "png"
+          }
+        }
+      ]
+    },
+    "sticker_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "sticker_1_clip",
+          "source": "sticker_1",
+          "timelineTrackStart": 0,
+          "duration": 35,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 30,
+            "y": 856,
+            "width": 346,
+            "height": 194,
+            "rotation": 0,
+            "opacity": 0.9
+          },
+          "metadata": {
+            "imageType": "animated",
+            "format": "gif",
+            "loop": true,
+            "frameRate": 12
+          }
+        },
+        {
+          "name": "sticker_2_clip",
+          "source": "sticker_2",
+          "timelineTrackStart": 1.5,
+          "duration": 33.5,
+          "sourceStartOffset": 0,
+          "clipType": "image",
+          "transform": {
+            "x": 30,
+            "y": 856,
+            "width": 346,
+            "height": 194,
+            "rotation": 0,
+            "opacity": 0.9
+          },
+          "metadata": {
+            "imageType": "animated",
+            "format": "gif",
+            "loop": true,
+            "frameRate": 24
+          }
+        }
+      ]
+    },
+    "title_track": {
+      "type": "video",
+      "clips": [
+        {
+          "name": "title_1_clip",
+          "source": "title_1",
+          "timelineTrackStart": 0,
+          "duration": 35,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 192,
+            "y": 86,
+            "width": 1536,
+            "height": 130,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "metadata": {
+            "text": "Json-to-FFmpeg Demo",
+            "fontFamily": "Arial",
+            "fontSize": 72,
+            "fontColor": "#FFFFFF",
+            "backgroundColor": "#00000000",
+            "stroke": {
+              "color": "#000000",
+              "width": 2
+            },
+            "shadow": {
+              "color": "#00000080",
+              "blur": 4,
+              "offsetX": 2,
+              "offsetY": 2
+            }
+          }
+        },
+        {
+          "name": "subtitle_1_clip",
+          "source": "subtitle_1",
+          "timelineTrackStart": 1,
+          "duration": 34,
+          "sourceStartOffset": 0,
+          "clipType": "text",
+          "transform": {
+            "x": 192,
+            "y": 864,
+            "width": 1536,
+            "height": 130,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "metadata": {
+            "text": "All sample media types in one timeline",
+            "fontFamily": "Arial",
+            "fontSize": 36,
+            "fontColor": "#FFFF00",
+            "backgroundColor": "#000000AA",
+            "textAlign": "center",
+            "boxPadding": 12
+          }
+        }
+      ]
+    },
+    "bgm_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "bgm_1_clip",
+          "source": "bgm_1",
+          "timelineTrackStart": 0,
+          "duration": 35,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 0.3,
+          "metadata": {
+            "audioType": "bgm",
+            "loop": true,
+            "fadeIn": 2,
+            "fadeOut": 2
+          }
+        }
+      ]
+    },
+    "sfx_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "sfx_1_clip",
+          "source": "sfx_1",
+          "timelineTrackStart": 0,
+          "duration": 1,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1,
+          "metadata": {
+            "audioType": "sfx"
+          }
+        },
+        {
+          "name": "sfx_2_clip",
+          "source": "sfx_2",
+          "timelineTrackStart": 1,
+          "duration": 2,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1,
+          "metadata": {
+            "audioType": "sfx"
+          }
+        },
+        {
+          "name": "sfx_3_clip",
+          "source": "sfx_3",
+          "timelineTrackStart": 2,
+          "duration": 3,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1,
+          "metadata": {
+            "audioType": "sfx"
+          }
+        }
+      ]
+    },
+    "narration_track": {
+      "type": "audio",
+      "clips": [
+        {
+          "name": "voiceover_en_clip",
+          "source": "voiceover_en",
+          "timelineTrackStart": 0,
+          "duration": 12,
+          "sourceStartOffset": 0,
+          "clipType": "audio",
+          "volume": 1,
+          "metadata": {
+            "audioType": "narration",
+            "subtitleFile": "samples/narration-en.srt",
+            "language": "en",
+            "speaker": "Narrator_EN"
+          }
+        }
+      ]
+    }
+  },
+  "transitions": [],
+  "output": {
+    "tempDir": "./tmp",
+    "file": "output-variant-1.mp4",
+    "videoCodec": "libx264",
+    "audioCodec": "aac",
+    "width": 1920,
+    "height": 1080,
+    "audioBitrate": "320k",
+    "preset": "veryfast",
+    "crf": 23,
+    "framerate": 30,
+    "flags": [
+      "-pix_fmt",
+      "yuv420p"
+    ],
+    "startPosition": 0,
+    "endPosition": 35,
+    "scaleRatio": 1
+  }
+}

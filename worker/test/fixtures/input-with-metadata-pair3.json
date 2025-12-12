@@ -9,7 +9,7 @@
         "bgmVolume": 30,
         "enableRandomTransition": true,
         "variantCount": 3,
-        "combineMode": "all",
+        "combineMode": "pair",
         "strictNoSplit": true
     },
     "assets": [

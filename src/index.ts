@@ -58,3 +58,12 @@ export function parseSchema(
 // Re-export buildTokens
 export { buildTokens } from "./buildTokens";
 export type { VideoEditorFormat } from "./types/VideoEditingFormat";
+export {
+  distributeTimelines,
+  type InputWithMetadata,
+  type DistributionResult,
+  type DistributionOverrides,
+  type CombineMode,
+  type DistributionStrategy,
+  type DistributionOutput,
+} from "./distribute/distributeTimelines";

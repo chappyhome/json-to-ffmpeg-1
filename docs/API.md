@@ -33,6 +33,28 @@
     - `error`: string，错误信息
     - `message`: string，固定为 `Failed to build FFmpeg command`
 
+- POST `/distribute`
+  - 用途: 将“资产清单 + uiConfig”分发成 1..N 份时间线 JSON
+  - 请求头: `Content-Type: application/json`
+  - 请求体: 与 `worker/test/fixtures/input-with-metadata.json` 相同结构，允许附加覆盖字段：
+    - `numOutputs?`: number，期望输出份数；未传则使用 `variantCount` 或 `uiConfig.variantCount`
+    - `combineMode?`: `"single" | "pair" | "all"`，优先级高于 `uiConfig.combineMode`
+    - `strictNoSplit?`: boolean，优先级高于 `uiConfig.strictNoSplit`（true 时主视频不可裁切）
+    - `seed?`: number，可选，控制主视频/组合的稳定排序
+  - 成功 200 响应字段:
+    - `ok: true`
+    - `strategy`: `{ combineMode, strictNoSplit, numOutputs, mainVideoCount, pairCount? }`
+    - `outputs`: `[{ index, variantKey, timeline }]`，timeline 符合现有 schema（version/inputs/tracks/output/transitions）
+    - `warnings?`: string[]（如 combineMode=all 但请求了多份）
+  - 失败 400 响应字段:
+    - `ok: false`
+    - `error`: `{ code, message, details? }`
+  - combineMode 规则（业务约束）:
+    - `all`: 把全部主视频顺序拼接成 1 份 timeline；伴随素材全覆盖；`numOutputs>1` 时返回 warning
+    - `single`: 逐条主视频生成，输出数量 = `min(numOutputs, mainVideoCount)`；`strictNoSplit=true` 且请求数超过主视频数时报错 `INSUFFICIENT_MAIN_VIDEOS`
+    - `pair`: 主视频做两两组合 (i<j)，输出数量 = `min(numOutputs, pairCount)`；不足时报错 `INSUFFICIENT_COMBINATIONS`
+  - 错误码一览: `ASSET_LIST_EMPTY`、`MAIN_VIDEO_EMPTY`、`INSUFFICIENT_MAIN_VIDEOS`、`INSUFFICIENT_COMBINATIONS`、`UNSUPPORTED_COMBINE_MODE`
+
 ## 调用示例
 
 ### curl（最小示例）
@@ -80,6 +102,17 @@ const { spawn } = require('node:child_process');
 const p = spawn('ffmpeg', data.args, { stdio: 'inherit' });
 p.on('exit', (code) => console.log('ffmpeg exit', code));
 ```
+
+### curl 分发资产 -> 时间线 JSON
+
+```bash
+curl -s -X POST \
+  https://json-to-ffmpeg-worker.sgqjpw2023.workers.dev/distribute \
+  -H 'Content-Type: application/json' \
+  --data-binary @worker/test/fixtures/input-with-metadata.json
+```
+
+响应体中的 `outputs[*].timeline` 可直接送入 `/build` 或本地 `parseSchema`。
 
 ## 最小可用 Timeline 示例
 
@@ -243,4 +276,3 @@ output:
 - URL 资源（如字幕）由 ffmpeg 在执行阶段获取，请确保可访问性与权限。
 - 输出容器影响字幕编码（mp4 使用 `mov_text`）。
 - 为提升可靠性，生产环境建议使用 `args` 方式执行，避免 shell 续行与转义问题。
-
