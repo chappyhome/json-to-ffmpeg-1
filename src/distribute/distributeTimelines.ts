@@ -491,14 +491,10 @@ function buildTimeline({
     tracks.sticker_track = { type: "video", clips };
   }
 
-  const titleAssets = keyedAssets.filter(
-    (a) => a.normalizedRole === "title" || a.normalizedRole === "subtitle",
-  );
+  const titleAssets = keyedAssets.filter((a) => a.normalizedRole === "title");
   if (titleAssets.length > 0) {
     const clips = titleAssets.map((asset, idx) => {
       addInput(asset);
-      const isSubtitle = asset.normalizedRole === "subtitle";
-      const yAnchor = isSubtitle ? "bottomCenter" : "topCenter";
       const timelineStart = Math.min(idx, Math.max(0, totalDuration - 1));
       return {
         name: `${asset.key}_clip`,
@@ -507,12 +503,32 @@ function buildTimeline({
         duration: totalDuration - timelineStart,
         sourceStartOffset: 0,
         clipType: "text" as const,
-        transform: textTransform(config.width, config.height, yAnchor),
+        transform: textTransform(config.width, config.height, "topCenter"),
         metadata: asset.meta,
       };
     });
 
     tracks.title_track = { type: "video", clips };
+  }
+
+  const subtitleAssets = keyedAssets.filter((a) => a.normalizedRole === "subtitle");
+  if (subtitleAssets.length > 0) {
+    const clips = subtitleAssets.map((asset, idx) => {
+      addInput(asset);
+      const timelineStart = Math.min(idx, Math.max(0, totalDuration - 1));
+      return {
+        name: `${asset.key}_clip`,
+        source: asset.key,
+        timelineTrackStart: timelineStart,
+        duration: totalDuration - timelineStart,
+        sourceStartOffset: 0,
+        clipType: "text" as const,
+        transform: textTransform(config.width, config.height, "bottomCenter"),
+        metadata: asset.meta,
+      };
+    });
+
+    tracks.subtitle_track = { type: "video", clips };
   }
 
   const bgmAssets = keyedAssets.filter((a) => a.normalizedRole === "bgm");

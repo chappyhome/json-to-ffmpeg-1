@@ -296,12 +296,17 @@
               "offsetY": 2
             }
           }
-        },
+        }
+      ]
+    },
+    "subtitle_track": {
+      "type": "video",
+      "clips": [
         {
           "name": "subtitle_1_clip",
           "source": "subtitle_1",
-          "timelineTrackStart": 1,
-          "duration": 34,
+          "timelineTrackStart": 0,
+          "duration": 35,
           "sourceStartOffset": 0,
           "clipType": "text",
           "transform": {

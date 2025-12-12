@@ -1,12 +1,12 @@
 {
   "version": 1,
   "inputs": {
-    "main_video_1": {
+    "main_video_2": {
       "type": "video",
-      "file": "samples/bee1920.mp4",
-      "hasAudio": false,
+      "file": "samples/cows1920.mp4",
+      "hasAudio": true,
       "hasVideo": true,
-      "duration": 20
+      "duration": 15
     },
     "main_video_3": {
       "type": "video",
@@ -135,17 +135,17 @@
         "audioType": "sfx"
       }
     },
-    "voiceover_zh": {
+    "voiceover_en": {
       "type": "audio",
-      "file": "samples/narration-zh.mp3",
+      "file": "samples/narration-en.mp3",
       "hasAudio": true,
       "hasVideo": false,
       "duration": 12,
       "metadata": {
         "audioType": "narration",
-        "subtitleFile": "samples/narration-zh.srt",
-        "language": "zh",
-        "speaker": "Narrator_ZH"
+        "subtitleFile": "samples/narration-en.srt",
+        "language": "en",
+        "speaker": "Narrator_EN"
       }
     }
   },
@@ -154,10 +154,10 @@
       "type": "video",
       "clips": [
         {
-          "name": "main_video_1_clip",
-          "source": "main_video_1",
+          "name": "main_video_2_clip",
+          "source": "main_video_2",
           "timelineTrackStart": 0,
-          "duration": 20,
+          "duration": 15,
           "sourceStartOffset": 0,
           "clipType": "video",
           "transform": {
@@ -172,7 +172,7 @@
         {
           "name": "main_video_3_clip",
           "source": "main_video_3",
-          "timelineTrackStart": 20,
+          "timelineTrackStart": 15,
           "duration": 10,
           "sourceStartOffset": 0,
           "clipType": "video",
@@ -194,7 +194,7 @@
           "name": "watermark_1_clip",
           "source": "watermark_1",
           "timelineTrackStart": 0,
-          "duration": 30,
+          "duration": 25,
           "sourceStartOffset": 0,
           "clipType": "image",
           "transform": {
@@ -219,7 +219,7 @@
           "name": "sticker_1_clip",
           "source": "sticker_1",
           "timelineTrackStart": 0,
-          "duration": 30,
+          "duration": 25,
           "sourceStartOffset": 0,
           "clipType": "image",
           "transform": {
@@ -241,7 +241,7 @@
           "name": "sticker_2_clip",
           "source": "sticker_2",
           "timelineTrackStart": 1.5,
-          "duration": 28.5,
+          "duration": 23.5,
           "sourceStartOffset": 0,
           "clipType": "image",
           "transform": {
@@ -268,7 +268,7 @@
           "name": "title_1_clip",
           "source": "title_1",
           "timelineTrackStart": 0,
-          "duration": 30,
+          "duration": 25,
           "sourceStartOffset": 0,
           "clipType": "text",
           "transform": {
@@ -296,12 +296,17 @@
               "offsetY": 2
             }
           }
-        },
+        }
+      ]
+    },
+    "subtitle_track": {
+      "type": "video",
+      "clips": [
         {
           "name": "subtitle_1_clip",
           "source": "subtitle_1",
-          "timelineTrackStart": 1,
-          "duration": 29,
+          "timelineTrackStart": 0,
+          "duration": 25,
           "sourceStartOffset": 0,
           "clipType": "text",
           "transform": {
@@ -331,7 +336,7 @@
           "name": "bgm_1_clip",
           "source": "bgm_1",
           "timelineTrackStart": 0,
-          "duration": 30,
+          "duration": 25,
           "sourceStartOffset": 0,
           "clipType": "audio",
           "volume": 0.3,
@@ -389,8 +394,8 @@
       "type": "audio",
       "clips": [
         {
-          "name": "voiceover_zh_clip",
-          "source": "voiceover_zh",
+          "name": "voiceover_en_clip",
+          "source": "voiceover_en",
           "timelineTrackStart": 0,
           "duration": 12,
           "sourceStartOffset": 0,
@@ -398,9 +403,9 @@
           "volume": 1,
           "metadata": {
             "audioType": "narration",
-            "subtitleFile": "samples/narration-zh.srt",
-            "language": "zh",
-            "speaker": "Narrator_ZH"
+            "subtitleFile": "samples/narration-en.srt",
+            "language": "en",
+            "speaker": "Narrator_EN"
           }
         }
       ]
@@ -409,7 +414,7 @@
   "transitions": [],
   "output": {
     "tempDir": "./tmp",
-    "file": "output-variant-2.mp4",
+    "file": "output-variant-3.mp4",
     "videoCodec": "libx264",
     "audioCodec": "aac",
     "width": 1920,
@@ -423,7 +428,7 @@
       "yuv420p"
     ],
     "startPosition": 0,
-    "endPosition": 30,
+    "endPosition": 25,
     "scaleRatio": 1
   }
 }
