@@ -3,7 +3,7 @@ import { validateTimeline } from './validation';
 import { validateCompleteTimeline, type ValidationResult } from './validation-complete';
 import { parseFFmpegArgs } from './tokenizer';
 import { PluginManager } from './plugin-manager';
-import { normalizeOutputPlugin, validateTracksPlugin } from './plugins';
+import { normalizeOutputPlugin, validateTracksPlugin, normalizeClipsPlugin } from './plugins';
 import type { BuildResult, VersionInfo, HealthResponse } from './types';
 
 // Package version (update manually or via build process)
@@ -22,6 +22,7 @@ const CORS_HEADERS = {
 function createPluginManager(): PluginManager {
   const manager = new PluginManager();
   manager.register(validateTracksPlugin);
+  manager.register(normalizeClipsPlugin);
   manager.register(normalizeOutputPlugin);
   return manager;
 }

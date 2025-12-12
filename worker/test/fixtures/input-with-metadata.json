@@ -1,0 +1,212 @@
+{
+    "styleCode": "hotel_vertical_mix_v1",
+    "variantCount": 1,
+    "uiConfig": {
+        "videoAspectRatio": "16:9",
+        "sceneCount": 5,
+        "singleShotSeconds": 3,
+        "keepOriginalAudioMode": "mute",
+        "bgmVolume": 30,
+        "enableRandomTransition": true,
+        "variantCount": 1,
+        "combineMode": "all",
+        "strictNoSplit": true
+    },
+    "assets": [
+        {
+            "id": 1,
+            "type": "video",
+            "role": "main_video",
+            "url": "samples/bee1920.mp4",
+            "duration": 20,
+            "hasAudio": false,
+            "hasVideo": true
+        },
+        {
+            "id": 2,
+            "type": "video",
+            "role": "main_video",
+            "url": "samples/cows1920.mp4",
+            "duration": 15,
+            "hasAudio": true,
+            "hasVideo": true
+        },
+        {
+            "id": 3,
+            "type": "video",
+            "role": "main_video",
+            "url": "samples/robin1920.mp4",
+            "duration": 10,
+            "hasAudio": false,
+            "hasVideo": true
+        },
+        {
+            "id": 4,
+            "type": "image",
+            "role": "watermark",
+            "url": "samples/flower.png",
+            "duration": 0,
+            "hasAudio": false,
+            "hasVideo": true,
+            "meta": {
+                "imageType": "static",
+                "format": "png"
+            }
+        },
+        {
+            "id": 5,
+            "type": "image",
+            "role": "sticker",
+            "url": "samples/emoji.gif",
+            "duration": 0,
+            "hasAudio": false,
+            "hasVideo": true,
+            "meta": {
+                "imageType": "animated",
+                "format": "gif",
+                "loop": true,
+                "frameRate": 12
+            }
+        },
+        {
+            "id": 6,
+            "type": "image",
+            "role": "sticker",
+            "url": "samples/loading.gif",
+            "duration": 0,
+            "hasAudio": false,
+            "hasVideo": true,
+            "meta": {
+                "imageType": "animated",
+                "format": "gif",
+                "loop": true,
+                "frameRate": 24
+            }
+        },
+        {
+            "id": 7,
+            "type": "audio",
+            "role": "bgm",
+            "url": "samples/ever.mp3",
+            "duration": 181,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "bgm",
+                "loop": true,
+                "fadeIn": 2,
+                "fadeOut": 2
+            }
+        },
+        {
+            "id": 8,
+            "type": "audio",
+            "role": "sfx",
+            "url": "samples/click.wav",
+            "duration": 1,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "sfx"
+            }
+        },
+        {
+            "id": 9,
+            "type": "audio",
+            "role": "sfx",
+            "url": "samples/whoosh.wav",
+            "duration": 2,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "sfx"
+            }
+        },
+        {
+            "id": 10,
+            "type": "audio",
+            "role": "sfx",
+            "url": "samples/notification.wav",
+            "duration": 3,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "sfx"
+            }
+        },
+        {
+            "id": 11,
+            "type": "audio",
+            "role": "voiceover",
+            "url": "samples/narration-en.mp3",
+            "duration": 12,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "narration",
+                "subtitleFile": "samples/narration-en.srt",
+                "language": "en",
+                "speaker": "Narrator_EN"
+            }
+        },
+        {
+            "id": 12,
+            "type": "audio",
+            "role": "voiceover",
+            "url": "samples/narration-zh.mp3",
+            "duration": 12,
+            "hasAudio": true,
+            "hasVideo": false,
+            "meta": {
+                "audioType": "narration",
+                "subtitleFile": "samples/narration-zh.srt",
+                "language": "zh",
+                "speaker": "Narrator_ZH"
+            }
+        },
+        {
+            "id": 13,
+            "type": "text",
+            "role": "title",
+            "url": "",
+            "duration": 0,
+            "hasAudio": false,
+            "hasVideo": true,
+            "meta": {
+                "text": "Json-to-FFmpeg Demo",
+                "fontFamily": "Arial",
+                "fontSize": 72,
+                "fontColor": "#FFFFFF",
+                "backgroundColor": "#00000000",
+                "stroke": {
+                    "color": "#000000",
+                    "width": 2
+                },
+                "shadow": {
+                    "color": "#00000080",
+                    "blur": 4,
+                    "offsetX": 2,
+                    "offsetY": 2
+                }
+            }
+        },
+        {
+            "id": 14,
+            "type": "text",
+            "role": "subtitle",
+            "url": "",
+            "duration": 0,
+            "hasAudio": false,
+            "hasVideo": true,
+            "meta": {
+                "text": "All sample media types in one timeline",
+                "fontFamily": "Arial",
+                "fontSize": 36,
+                "fontColor": "#FFFF00",
+                "backgroundColor": "#000000AA",
+                "textAlign": "center",
+                "boxPadding": 12
+            }
+        }
+    ]
+}

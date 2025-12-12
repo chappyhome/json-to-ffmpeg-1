@@ -5,3 +5,4 @@
 
 export { normalizeOutputPlugin } from './normalize-output';
 export { validateTracksPlugin } from './validate-tracks';
+export { normalizeClipsPlugin } from './normalize-clips';
