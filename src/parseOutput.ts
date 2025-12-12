@@ -78,6 +78,9 @@ export function parseOutput({
         const langCode = normalizeLanguageCode(subtitleInputs[i].language);
         outputCommand += `-metadata:s:s:${i} language=${langCode} `;
       }
+
+      // Mark the first subtitle stream as default so players display it automatically
+      outputCommand += "-disposition:s:0 default ";
     }
   }
 

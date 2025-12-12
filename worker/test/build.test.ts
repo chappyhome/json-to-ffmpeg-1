@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { parseSchema, buildTokens } from 'json-to-ffmpeg';
 import simpleTimeline from './fixtures/simple-timeline.json';
 import complexTimeline from './fixtures/complex-timeline.json';
+import pairTimeline from './fixtures/pair-main_video_1-main_video_2.json';
 
 describe('Build command tests', () => {
   it('should generate non-empty command for simple timeline', () => {
@@ -73,5 +74,10 @@ describe('Build command tests', () => {
     args.forEach(arg => {
       expect(typeof arg).toBe('string');
     });
+  });
+
+  it('should mark first subtitle stream as default when subtitles exist', () => {
+    const command = parseSchema(pairTimeline);
+    expect(command).toContain('-disposition:s:0 default');
   });
 });
