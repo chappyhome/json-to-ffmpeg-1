@@ -1,0 +1,46 @@
+{
+    "scripts": [
+        [
+            {
+                "text": "This is video one.",
+                "keywords": [
+                    "nature"
+                ],
+                "duration": 5
+            }
+        ],
+        [
+            {
+                "text": "This is video two.",
+                "keywords": [
+                    "city"
+                ],
+                "duration": 5
+            }
+        ]
+    ],
+    "assets": [
+        {
+            "id": "1",
+            "url": "https://example.com/video1.mp4",
+            "tags": [
+                "nature"
+            ],
+            "type": "video",
+            "duration": 10
+        },
+        {
+            "id": "2",
+            "url": "https://example.com/video2.mp4",
+            "tags": [
+                "city"
+            ],
+            "type": "video",
+            "duration": 10
+        }
+    ],
+    "config": {
+        "width": 1280,
+        "height": 720
+    }
+}

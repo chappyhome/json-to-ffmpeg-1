@@ -67,3 +67,6 @@ export {
   type DistributionStrategy,
   type DistributionOutput,
 } from "./distribute/distributeTimelines";
+
+export { generateBatchTimelines } from "./one-click/generateTimeline";
+export * from "./one-click/types";

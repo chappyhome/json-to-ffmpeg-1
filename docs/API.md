@@ -55,6 +55,24 @@
     - `pair`: 主视频做两两组合 (i<j)，输出数量 = `min(numOutputs, pairCount)`；不足时报错 `INSUFFICIENT_COMBINATIONS`
   - 错误码一览: `ASSET_LIST_EMPTY`、`MAIN_VIDEO_EMPTY`、`INSUFFICIENT_MAIN_VIDEOS`、`INSUFFICIENT_COMBINATIONS`、`UNSUPPORTED_COMBINE_MODE`
 
+- POST `/distribute/build`
+  - 用途: 分发 -> 校验 -> 生成 ffmpeg 命令（多份 timeline 一次返回）
+  - 请求头: `Content-Type: application/json`
+  - 请求体: 同 `/distribute`（资产清单 + 可选 overrides）
+  - 成功 200 响应字段:
+    - `ok: true`
+    - `strategy`: `{ combineMode, strictNoSplit, numOutputs, mainVideoCount, pairCount? }`
+    - `results`: 数组，每个元素：
+      - `index`: number，输出序号
+      - `variantKey`: string，标识主视频/组合
+      - `timeline`: Timeline JSON（version/inputs/tracks/output/transitions）
+      - `validation`: `{ valid: boolean, warnings?: string[], errors?: any[] }`
+      - `command?`: string，ffmpeg shell 命令（含续行符）
+      - `args?`: string[]，ffmpeg 参数数组（如 `spawn('ffmpeg', args)`)
+      - `commandError?`: string，若构建失败
+  - 失败 400 响应字段: 与 `/distribute` 相同（分发层面的错误）
+  - 说明: 每个 timeline 都会先做完整校验（validateCompleteTimeline），再尝试 `parseSchema`/`buildTokens` 生成命令。即使单条校验失败，也会在对应 result 中返回错误信息，其余条目不受影响。
+
 ## 调用示例
 
 ### curl（最小示例）
@@ -113,6 +131,26 @@ curl -s -X POST \
 ```
 
 响应体中的 `outputs[*].timeline` 可直接送入 `/build` 或本地 `parseSchema`。
+
+### curl 分发并生成 ffmpeg 命令（多份）
+
+```bash
+curl -s -X POST \
+  https://json-to-ffmpeg-worker.sgqjpw2023.workers.dev/distribute/build \
+  -H 'Content-Type: application/json' \
+  --data-binary @worker/test/fixtures/input-with-metadata-pair3.json \
+  | jq -r '.results[] | "# " + .variantKey + "\n" + (.command // "<no command>")'
+```
+
+只取第一条命令：
+
+```bash
+curl -s -X POST \
+  https://json-to-ffmpeg-worker.sgqjpw2023.workers.dev/distribute/build \
+  -H 'Content-Type: application/json' \
+  --data-binary @worker/test/fixtures/input-with-metadata-pair3.json \
+  | jq -r '.results[0].command'
+```
 
 ## 最小可用 Timeline 示例
 

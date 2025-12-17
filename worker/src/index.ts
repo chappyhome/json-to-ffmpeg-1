@@ -1,4 +1,4 @@
-import { parseSchema, buildTokens, distributeTimelines } from 'json-to-ffmpeg';
+import { parseSchema, buildTokens, distributeTimelines, generateBatchTimelines, type VideoEditorFormat } from '../../src/index';
 import { validateTimeline } from './validation';
 import { validateCompleteTimeline, type ValidationResult } from './validation-complete';
 import { parseFFmpegArgs } from './tokenizer';
@@ -193,7 +193,7 @@ async function handleDistribute(request: Request): Promise<Response> {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
       }
-      );
+    );
   }
 }
 
@@ -280,6 +280,67 @@ async function handleDistributeBuild(request: Request): Promise<Response> {
 }
 
 /**
+ * Handle POST /one-click/build
+ */
+async function handleOneClickBuild(request: Request): Promise<Response> {
+  try {
+    const body = await request.json();
+
+    // Generate timelines (Batch)
+    const timelines = generateBatchTimelines(body as import('../../src/one-click/types').OneClickInput);
+
+    const results = timelines.map((timeline: VideoEditorFormat, index: number) => {
+      // Validate
+      const validation = validateCompleteTimeline(timeline);
+
+      const entry: any = {
+        index,
+        timeline,
+        validation
+      };
+
+      if (validation.valid) {
+        try {
+          const command = parseSchema(timeline);
+          entry.command = command;
+          try {
+            entry.args = buildTokens(timeline);
+          } catch {
+            entry.args = parseFFmpegArgs(command);
+          }
+        } catch (err) {
+          entry.commandError = err instanceof Error ? err.message : String(err);
+        }
+      }
+      return entry;
+    });
+
+    return new Response(JSON.stringify({
+      ok: true,
+      results
+    }, null, 2), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: {
+          code: 'GENERATION_ERROR',
+          message: errorMessage,
+        },
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      },
+    );
+  }
+}
+
+/**
  * Main fetch handler
  */
 export default {
@@ -310,6 +371,10 @@ export default {
       return handleDistributeBuild(request);
     }
 
+    if (method === 'POST' && path === '/one-click/build') {
+      return handleOneClickBuild(request);
+    }
+
     if (method === 'GET' && path === '/version') {
       return handleVersion();
     }
@@ -328,6 +393,7 @@ export default {
           'POST /validate - Validate timeline JSON without building',
           'POST /distribute - Convert asset inventory JSON into 1..N timeline JSON outputs',
           'POST /distribute/build - Distribute, validate, and build FFmpeg commands for each output timeline',
+          'POST /one-click/build - Generate single timeline from script and assets',
           'GET /version - Get version information',
           'GET /health - Health check',
         ],
