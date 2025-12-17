@@ -18,7 +18,7 @@ export function parseSchema(
     throw new Error("Schema version not supported");
   }
 
-  let outputCommand = "#!/bin/bash\n";
+  let outputCommand = "";
   const inputFiles: InputFiles = [];
 
   outputCommand += preprocessClips({

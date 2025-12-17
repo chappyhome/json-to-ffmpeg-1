@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const WORKER_URL = "http://127.0.0.1:8787";
+const WORKER_URL = "https://json-to-ffmpeg-worker.sgqjpw2023.workers.dev";
 const DEFAULT_PAYLOAD = path.join(__dirname, "fixtures/batch-input.json");
 
 // Parse args
