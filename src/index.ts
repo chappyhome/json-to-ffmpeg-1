@@ -57,6 +57,7 @@ export function parseSchema(
 
 // Re-export buildTokens
 export { buildTokens } from "./buildTokens";
+export { parseSchemaCompact } from "./parseSchemaCompact";
 export type { VideoEditorFormat } from "./types/VideoEditingFormat";
 export {
   distributeTimelines,

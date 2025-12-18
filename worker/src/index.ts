@@ -1,4 +1,4 @@
-import { parseSchema, buildTokens, distributeTimelines, generateBatchTimelines, type VideoEditorFormat } from '../../src/index';
+import { parseSchema,parseSchemaCompact, buildTokens, distributeTimelines, generateBatchTimelines, type VideoEditorFormat } from '../../src/index';
 import { validateTimeline } from './validation';
 import { validateCompleteTimeline, type ValidationResult } from './validation-complete';
 import { parseFFmpegArgs } from './tokenizer';
@@ -301,7 +301,7 @@ async function handleOneClickBuild(request: Request): Promise<Response> {
 
       if (validation.valid) {
         try {
-          const command = parseSchema(timeline);
+          const command = parseSchemaCompact(timeline);
           entry.command = command;
           try {
             entry.args = buildTokens(timeline);
